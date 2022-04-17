@@ -1,5 +1,20 @@
-export const baseTheme = {
-    colors: {
-        primary: "#7986cb",
+import { createTheme } from "@mui/material";
+
+export const baseTheme = createTheme({
+    typography: {
+        fontFamily: "Roboto",
+       
+        h1: {
+            fontSize: '32px',
+            color: "var(--color-gray)",
+        },
+
+        h2: {
+            fontSize: '24px'
+        },
+        
+        h3: {
+            fontSize: '16px'
+        }
     },
-};
+});

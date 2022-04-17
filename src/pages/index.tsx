@@ -1,21 +1,35 @@
+import React, { Suspense, useEffect } from "react";
 import { FC } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { refreshToken } from "../api/refreshToken";
+import ManageApplications from "../components/Admin/ManageApplications/ManageApplications";
+import { InfrastructureProjects } from "../components/InfrastructureProjects/InfrastructureProjects";
 import { InnovativeDevelopments } from "../components/InnovativeDevelopments/InnovativeDevelopments";
+import { Login } from "../components/Login/Login";
 import Main from "../components/Main/Main";
+import { ScientificSchools } from "../components/ScientificSchools/ScientificSchools";
 import UnknownPage from "../components/UnknownPage/UnknownPage";
 import { Welcome } from "../components/Welcome/Welcome";
+import { useRootStore } from "../store/RootStore";
+import { Token } from "../Token";
+import { AdminPage } from "./Admin/AdminPage";
+import AuthPage from "./Auth/AuthPage";
+
+const LkPage = React.lazy(() => import('./Lk/LkPage'));
 
 const Pages: FC = () => {
+    
     return (
         <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route
-                path="innovative-projects"
-                element={<InnovativeDevelopments />}
+            <Route path="/auth/*" element={<AuthPage />} />
+            <Route path="/admin/*" element={<AdminPage />} />
+            <Route path="/*" 
+                element={
+                    <Suspense fallback={<div />}>
+                        <LkPage />
+                    </Suspense>
+                }
             />
-            <Route path="scientific-schools" element={<div />} />
-            <Route path="infrastructure-projects" element={<div />} />
-
             <Route path="*" element={<UnknownPage />} />
         </Routes>
     );

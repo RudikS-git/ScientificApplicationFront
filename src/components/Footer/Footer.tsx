@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material";
 import { FC } from "react";
 import { StyledFooter } from "./Footer.styles";
 

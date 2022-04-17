@@ -1,0 +1,9 @@
+.applicationGroup {
+    display: flex;
+    align-items: center;
+
+    & button {
+        height: 36px;
+        width: 36px;
+    }
+}

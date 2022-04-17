@@ -14,19 +14,15 @@ const Sidebar = () => {
             <StyledAppBar position="static">
                 <List>
                     <ListItem>
-                        <InnovationIcon />
+                        {/* <InnovationIcon /> */}
                         <Link to={"/innovative-projects"}>
                             Инновационная разработка
                         </Link>
                     </ListItem>
 
                     <ListItem>
-                        <Link to={"/scientific-schools"}>Научная школа</Link>
-                    </ListItem>
-
-                    <ListItem>
-                        <Link to={"/infrastructure-projects"}>
-                            Инфраструктурный проект
+                        <Link to={"/admin/applications"}>
+                            Панель администратора
                         </Link>
                     </ListItem>
                 </List>

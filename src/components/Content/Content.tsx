@@ -1,6 +1,7 @@
 import React, { FC } from "react";
-import { StyledContent } from "./Content.styles";
+import classes from "./Content.module.scss";
+
 
 export const Content: FC = ({ children }) => {
-    return <StyledContent>{children}</StyledContent>;
+    return <div className={classes.root}>{children}</div>;
 };

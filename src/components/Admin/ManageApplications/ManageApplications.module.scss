@@ -1,0 +1,9 @@
+.root {
+    color: black;
+}
+
+.manageBlock {
+    & button {
+        color: var(--color-blue);
+    }
+}

@@ -1,8 +1,16 @@
+import { Fade } from "@mui/material";
 import { FC } from "react";
-import { StyledMain } from "./Main.styles";
+import classes from "./Main.module.scss";
 
 const Main: FC = ({ children }) => {
-    return <StyledMain>{children}</StyledMain>;
+
+    return(
+        <div className={classes.wrapper}>
+            <div className={classes.root}>
+                {children}
+            </div>
+        </div>
+    )
 };
 
 export default Main;

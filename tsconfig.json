@@ -16,5 +16,12 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    "include": ["src"]
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

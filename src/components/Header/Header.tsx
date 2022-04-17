@@ -1,11 +1,18 @@
+import { Button } from "@mui/material";
 import { FC } from "react";
-import { StyledHeader } from "./Header.styles";
+import { useNavigate } from "react-router";
+import { useRootStore } from "../../store/RootStore";
+import { AccountHeader } from "../AccountHeader/AccountHeader";
+import classes from "./Header.module.scss";
 
 const Header: FC = () => {
+    
+
     return (
-        <StyledHeader>
-            <header>Портал научно-инновационных разработок</header>
-        </StyledHeader>
+        <header className={classes.root}>
+            <img src="/logo.png" alt="logo" />
+            <AccountHeader /> 
+        </header>
     );
 };
 
