@@ -16,12 +16,12 @@ export const useFetch = (props?: Partial<UseFetchProps>) => {
     const [response, setResponse] = useState<AxiosResponse<any, any>>();
     const [cancelTokenSource, setCancelTokenSource] = useState<CancelTokenSource>();
 
-    const fetchData = async (fetch: AxiosPromise<any> | Promise<any>) => {
+    const fetchData = async (fetch: () => AxiosPromise<any> | Promise<any>) => {
         setIsLoading(true);
         setCancelTokenSource(axios.CancelToken.source());
 
         try {
-            const result = await fetch;
+            const result = await fetch();
             console.log(result)
             setResponse(result.data);
 

@@ -1,6 +1,8 @@
 import { Divider } from '@mui/material';
+import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { BreadCrumbsHOC } from '../../../HOC/BreadCrumbsHOC';
 import { WithLoader } from '../../../HOC/WithLoader';
 import { useFetch } from '../../../hooks/useFetch';
@@ -12,33 +14,20 @@ import { ADMIN_APPLICATION_BREADCUMBS } from '../BreadCrumbsPath/Application';
 import { CreateApplicationTabs } from '../CreateApplicationTabs/CreateApplicationTabs';
 import { Application } from '../Models/Application';
 import classes from './ApplicationDetails.module.scss';
+import { useApplicationDetails } from './useApplicationDetails';
 
 export const ApplicationDetails = () => {
 
     const { id } = useParams();
-    const navigate = useNavigate();
-    const { applicationStore: { getApplicationById }} = useAdminStores();
-    const { startFetch, isLoading } = useFetch();
-    const [application, setApplication] = useState<Application>();
-
-    const getApplication = async () => {
-      const { data, error } = await startFetch(getApplicationById(Number(id)));
-
-      if(error) {
-        navigate(-1);
-      }
-      else {
-        setApplication(data);
-        console.log(data);
-      }
-
-    }
+    const { formik, fetchUpdateApplication, getApplication, isLoading } = useApplicationDetails({ id: Number(id) });
 
     useEffect(() => {
         if(id) {
           getApplication()
         }
     }, [id]);
+
+    console.log(formik)
     
     return (
         // <BreadCrumbsHOC links={ADMIN_APPLICATION_BREADCUMBS}>
@@ -53,23 +42,35 @@ export const ApplicationDetails = () => {
                   <h2>Основные настройки</h2>
                   <TextField
                     label="Наименование"
-                    value={application?.name}
+                    name="name"
+                    value={formik.values?.name}
+                    onChange={formik.handleChange}
                     fullWidth
+                    error={formik.errors?.name}
                   />
 
                   <TextField
                     label="Описание"
-                    value={application?.description}
+                    name="description"
+                    value={formik.values?.description}
+                    onChange={formik.handleChange}
                     fullWidth
                     multiline
+                    error={formik.errors?.description}
                   />
                 </div>
 
-
                 <div>
                   <h2>Группы</h2>
-                  <ApplicationGroups applicationGroups={application?.applicationGroups} />
+                  <ApplicationGroups formik={formik} applicationGroups={formik.values?.applicationGroups || []} />
                 </div>
+
+                <Button
+                  onClick={formik.submitForm}
+                  disabled={formik.isSubmitting}
+                >
+                  Сохранить
+                </Button>
             </WithLoader>
           </div>
         // </BreadCrumbsHOC>

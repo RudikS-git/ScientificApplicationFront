@@ -1,6 +1,6 @@
 export interface Application {
-    id: number,
-    name: string,
+    id?: number,
+    name?: string,
     description?: string
     created?: Date,
     updated?: Date,
@@ -8,8 +8,8 @@ export interface Application {
 }
 
 export interface ApplicationGroup {
-    id: number,
-    name: string,
+    id?: number,
+    name?: string,
     selectFields?: AAdminSelect[],
     fields?: AAdminField[],
     fieldSets?: AAdminFieldSet[]

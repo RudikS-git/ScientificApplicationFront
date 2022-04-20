@@ -12,7 +12,7 @@ export const TextField = (props: TextFieldProps) => {
     const { error, ...others } = props;
 
     return (
-        <>
+        <div className={classes.root}>
             <MuiTextField
                 error={Boolean(error)}
                 {...others}
@@ -21,6 +21,6 @@ export const TextField = (props: TextFieldProps) => {
             {
                 error && <p className={classes.error}>{error}</p>
             }
-        </>
+        </div>
     )
 }

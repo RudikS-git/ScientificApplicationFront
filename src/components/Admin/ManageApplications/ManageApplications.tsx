@@ -18,7 +18,7 @@ import { useApplication } from './useApplication';
 
 const perPages = [10, 15, 20, 25];
 
-const ManageApplications = observer(() => {
+const ManageApplications = () => {
 
     const navigate = useNavigate();
     const { applicationStore: { getApplications, pagedApplications } } = useAdminStores();
@@ -52,7 +52,7 @@ const ManageApplications = observer(() => {
     }, [page, perPage])
 
     const getApplicationPage = (page = 1, pageSize = 15) => {
-      startFetch(getApplications(page, pageSize))
+      startFetch(() => getApplications(page, pageSize))
     }
 
     return (
@@ -111,6 +111,6 @@ const ManageApplications = observer(() => {
         />
       </div>
     )
-})
+}
 
-export default ManageApplications;
+export default observer(ManageApplications);

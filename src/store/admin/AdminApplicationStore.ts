@@ -1,6 +1,7 @@
 import axios from "axios";
 import { configure, runInAction }                from "mobx";
 import React from "react";
+import { Application } from "../../components/Admin/Models/Application";
 import { PagedItems } from "../../Models/PagedItems";
 import { rootStore } from "../RootStore";
 
@@ -30,7 +31,11 @@ export class AdminApplicationStore {
         return axios.delete(`/api/application/${id}`);
     }
 
-    createApplication = async (createApplicationModel: any) => {
+    createApplication = async (createApplicationModel: Application) => {
         return axios.post(`/api/application`, createApplicationModel);
+    }
+
+    updateApplication = async (createApplicationModel: Application) => {
+        return axios.put(`/api/application/${createApplicationModel.id}`, createApplicationModel);
     }
 }

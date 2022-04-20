@@ -27,6 +27,7 @@ export const CreateApplicationModal = ({ isOpen, close, ok, formik } : CreateApp
                     onChange={formik.handleChange}
                     error={formik.errors?.name}
                     disabled={formik.isSubmitting}
+                    fullWidth
                 />
 
                 <Box sx={{ mt: 3 }}>

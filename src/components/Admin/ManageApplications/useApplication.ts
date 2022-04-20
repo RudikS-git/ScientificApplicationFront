@@ -21,9 +21,9 @@ export const useApplication = ({ submitHandler } : useApplicationProps) => {
 
     const fetchCreateApplication = async () => {
 
-        const result = await startFetch(createApplication({
+        const result = await startFetch(() => createApplication({
             ...formik.values, 
-            groups: [
+            applicationGroups: [
                 { name: formik.values.name }
             ]
         }));
@@ -43,7 +43,7 @@ export const useApplication = ({ submitHandler } : useApplicationProps) => {
     }
 
     const deleteApplication = async (id: number) => {
-        const { error } = await startFetch(deleteApplicationById(id));
+        const { error } = await startFetch(() => deleteApplicationById(id));
 
         console.log(error)
         if(!error) {
@@ -64,3 +64,7 @@ export const useApplication = ({ submitHandler } : useApplicationProps) => {
         deleteApplication
     }
 }
+function Application(arg0: { groups: { name: string; }[]; name: string; }, Application: any): import("axios").AxiosPromise<any> | Promise<any> {
+    throw new Error('Function not implemented.');
+}
+

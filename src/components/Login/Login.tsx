@@ -26,11 +26,11 @@ export const Login = () => {
   const { startFetch, isLoading } = useFetch();
 
   const submit = async () => {
-    const { error, validateErrors } = await startFetch(login(formik.values));
+    const { error, validateErrors } = await startFetch(() => login(formik.values));
 
     if(error) {
         formik.setErrors({ 
-          email: validateErrors?.email[0],
+          email: validateErrors?.email[0], 
           password: validateErrors?.password[0]
         });
     }
