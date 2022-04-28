@@ -14,6 +14,7 @@ export const TextField = (props: TextFieldProps) => {
     return (
         <div className={classes.root}>
             <MuiTextField
+                fullWidth
                 error={Boolean(error)}
                 {...others}
             />

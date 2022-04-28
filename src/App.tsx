@@ -1,9 +1,5 @@
 import React, { FC, useEffect } from "react";
 import "./App.css";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import Main from "./components/Main/Main";
 import Pages from "./pages";
 import CommonContainer from "./components/CommonContainer/CommonContainer";
 import { MainStoreHOC } from "./store/MainStoreHOC";
@@ -24,11 +20,11 @@ import './dayjs.config.ts'
 
 const App: FC = observer(() => {
 
-    const { authStore: { getUserInfo, typeAuth, makeUnAuthState }} = useRootStore();
+    const { authStore: { getUserInfo, typeAuth, makeUnAuthState } } = useRootStore();
 
     const getInitialData = async () => {
         try {
-            if(!Token.getInstance().content) {
+            if (!Token.getInstance().content) {
                 await getToken();
             }
 
@@ -40,25 +36,25 @@ const App: FC = observer(() => {
     }
 
     const getToken = async () => {
-      const token = Token.getInstance();
-  
-      if(!token?.content || token.hasTokenExpired) {
-        const { data } = await refreshToken();
+        const token = Token.getInstance();
 
-        if(data && data?.accessToken) {
-          token.content = data.accessToken;
+        if (!token?.content || token.hasTokenExpired) {
+            const { data } = await refreshToken();
+
+            if (data && data?.accessToken) {
+                token.content = data.accessToken;
+            }
         }
-      }
     }
 
     useEffect(() => {
-        if(typeAuth === TypeAuth.Loading) {
+        if (typeAuth === TypeAuth.Loading) {
             getInitialData();
         }
-     
+
     }, [Token.getInstance().content])
-    
-    if(typeAuth === TypeAuth.Loading) {
+
+    if (typeAuth === TypeAuth.Loading) {
         return <></>
     }
 
@@ -87,4 +83,3 @@ const App: FC = observer(() => {
 });
 
 export default App;
-   

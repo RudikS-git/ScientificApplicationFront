@@ -1,7 +1,8 @@
 import axios from "axios";
-import { configure, runInAction }                from "mobx";
+import { configure, runInAction } from "mobx";
 import React from "react";
-import { Application } from "../../components/Admin/Models/Application";
+import { Application } from "../../components/Admin/Types/Application";
+import { InputModel } from "./models/InputModel";
 import { PagedItems } from "../../Models/PagedItems";
 import { rootStore } from "../RootStore";
 
@@ -10,7 +11,7 @@ export class AdminApplicationStore {
     pagedApplications?: PagedItems<any>;
 
     constructor() {
-       // do nothing
+        // do nothing
     }
 
     getApplications = async (page = 1, pageSize = 15) => {
@@ -37,5 +38,17 @@ export class AdminApplicationStore {
 
     updateApplication = async (createApplicationModel: Application) => {
         return axios.put(`/api/application/${createApplicationModel.id}`, createApplicationModel);
+    }
+
+    createInput = async (inputModel: Partial<InputModel>) => {
+        return axios.post(`/api/input-field`, inputModel);
+    }
+
+    updateInput = async (inputModel: Partial<InputModel>) => {
+        return axios.put(`/api/input-field`, inputModel);
+    }
+
+    deleteInput = async (inputId: number) => {
+        return axios.delete(`/api/input-field/${inputId}`);
     }
 }

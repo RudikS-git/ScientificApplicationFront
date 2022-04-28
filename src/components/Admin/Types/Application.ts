@@ -1,3 +1,5 @@
+import { InputVariant } from "./Input"
+
 export interface Application {
     id?: number,
     name?: string,
@@ -20,7 +22,8 @@ export interface AAdminSelect {
 }
 
 export interface AAdminField {
-    label: string
+    label: string,
+    inputUnderTypeId: InputVariant
 }
 
 export interface AAdminFieldSet {

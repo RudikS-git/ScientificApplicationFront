@@ -1,3 +1,4 @@
+import { CommonDictionary } from "./CommonDictionary";
 import React, { useEffect } from "react";
 import { AdminRootStore } from "./admin/AdminRootStore";
 import { AuthStore } from "./AuthStore";
@@ -8,19 +9,21 @@ export class RootStore {
 
     private _lkStore: LKRootStore;
     private _adminStore: AdminRootStore;
-    private _authStore : AuthStore;
+    private _authStore: AuthStore;
+    private _commonDictionary: CommonDictionary;
 
     constructor() {
         this._authStore = new AuthStore(this);
         this._adminStore = new AdminRootStore();
-        this._lkStore = new LKRootStore();    
+        this._lkStore = new LKRootStore();
+        this._commonDictionary = new CommonDictionary();
     }
 
-    set authStore (authStore: AuthStore) {
+    set authStore(authStore: AuthStore) {
         this._authStore = authStore;
     }
 
-    get authStore () {
+    get authStore() {
         return this._authStore;
     }
 
@@ -38,6 +41,13 @@ export class RootStore {
 
     get lkStore() {
         return this._lkStore;
+    }
+    set commonDictionary(commonDictionary: CommonDictionary) {
+        this._commonDictionary = commonDictionary;
+    }
+
+    get commonDictionary() {
+        return this._commonDictionary;
     }
 }
 

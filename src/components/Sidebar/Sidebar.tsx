@@ -4,7 +4,6 @@ import { StyledSidebar, appBarStyles } from "./Sidebar.styles";
 import { styled } from "@mui/styles";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InnovationIcon } from "../../images/InnovationIcon";
 
 const StyledAppBar = styled(AppBar)({ ...appBarStyles });
 
@@ -14,7 +13,6 @@ const Sidebar = () => {
             <StyledAppBar position="static">
                 <List>
                     <ListItem>
-                        {/* <InnovationIcon /> */}
                         <Link to={"/innovative-projects"}>
                             Инновационная разработка
                         </Link>

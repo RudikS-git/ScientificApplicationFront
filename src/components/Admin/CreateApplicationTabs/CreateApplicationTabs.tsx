@@ -2,23 +2,23 @@ import { Box, Tab, Tabs } from '@mui/material'
 import React from 'react'
 
 interface CreateApplicationTabsProps {
-    value: number,
-    handleChange(): void
+  value: string,
+  handleChange(newValue: string): void
 }
 
-export const CreateApplicationTabs = ({ value, handleChange } : CreateApplicationTabsProps) => {
+export const CreateApplicationTabs = ({ value, handleChange }: CreateApplicationTabsProps) => {
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs
         value={value}
-        onChange={handleChange}
+        onChange={(event: React.SyntheticEvent, newValue: string) => handleChange(newValue)}
         aria-label="wrapped label tabs example"
       >
         <Tab
-          value="one"
+          value="main"
           label="Главная"
         />
-        <Tab value="two" label="Форма" />
+        <Tab value="form" label="Форма" />
       </Tabs>
     </Box>
   )

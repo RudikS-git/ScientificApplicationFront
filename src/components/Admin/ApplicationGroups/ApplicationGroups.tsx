@@ -2,7 +2,7 @@ import { IconButton } from '@mui/material'
 import React from 'react'
 import { Button } from '../../../UI/Button/Button'
 import { TextField } from '../../../UI/TextField/TextField'
-import { Application, ApplicationGroup } from '../Models/Application'
+import { Application, ApplicationGroup } from '../Types/Application'
 import classes from './ApplicationGroups.module.scss';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { FieldArray, FormikConfig, FormikProps, FormikProvider, FormikValues } from 'formik'
@@ -11,30 +11,32 @@ interface ApplicationGroupProps {
     applicationGroups: Required<ApplicationGroup[]>,
     formik: FormikProps<Application>
 }
-export const ApplicationGroups = ({ formik, applicationGroups } : ApplicationGroupProps) => {
-    
+export const ApplicationGroups = ({ formik, applicationGroups }: ApplicationGroupProps) => {
+
     const handleCreate = () => {
-        formik.handleChange({target: { 
-            name: 'applicationGroups', 
-            value: [
-                ...applicationGroups,
-                { name: '' }  
-            ]
-        }
-    })}
+        formik.handleChange({
+            target: {
+                name: 'applicationGroups',
+                value: [
+                    ...applicationGroups,
+                    { name: '' }
+                ]
+            }
+        })
+    }
 
     const handleDelete = (index: number) => {
 
         formik.setValues(previosState => {
             const values = previosState.applicationGroups?.slice() || []; // sLice
             values.splice(index, 1); // sPlice
-            
+
             return { ...previosState, applicationGroups: values }
         })
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
-        
+
         formik.setValues(previosState => {
             const values = previosState.applicationGroups?.slice() || []; // sLice
             values[index] = { ...values[index], name: e.target.value }
@@ -42,7 +44,7 @@ export const ApplicationGroups = ({ formik, applicationGroups } : ApplicationGro
             return { ...previosState, applicationGroups: values }
         })
     }
-    
+
     return (
         <>
             <FormikProvider value={formik}>
@@ -62,8 +64,8 @@ export const ApplicationGroups = ({ formik, applicationGroups } : ApplicationGro
                                                     fullWidth
                                                     onChange={formik.handleChange}
                                                 />
-                                                <IconButton 
-                                                    color="error" 
+                                                <IconButton
+                                                    color="error"
                                                     disabled={index === 0}
                                                     onClick={() => arrayHelper.remove(index)}
                                                 >
@@ -73,11 +75,11 @@ export const ApplicationGroups = ({ formik, applicationGroups } : ApplicationGro
                                         )
                                     })
                                 }
-                                <Button 
+                                <Button
                                     variant='contained'
                                     color='primary'
                                     fullWidth
-                                    onClick={() => arrayHelper.push({ name: ''})}
+                                    onClick={() => arrayHelper.push({ name: '' })}
                                 >
                                     Создать
                                 </Button>
@@ -86,7 +88,7 @@ export const ApplicationGroups = ({ formik, applicationGroups } : ApplicationGro
                     }}
                 />
 
-    
+
             </FormikProvider>
             {/* {
                 applicationGroups?.map((it, index) => {
@@ -110,7 +112,7 @@ export const ApplicationGroups = ({ formik, applicationGroups } : ApplicationGro
                     )
                 })
             } */}
-           
+
         </>
     )
 }

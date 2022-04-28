@@ -4,61 +4,61 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useFetch } from '../../../hooks/useFetch';
 import { useAdminStores } from '../../../store/RootStore';
-import { Application } from '../Models/Application';
+import { Application } from '../Types/Application';
 
 interface UseApplicationDetailsProps {
-    id: number
+  id: number
 }
 
-export const useApplicationDetails = ({ id } : UseApplicationDetailsProps) => {
-    
-    const navigate = useNavigate();
-    const { applicationStore: { getApplicationById, updateApplication }} = useAdminStores();
-    const { startFetch, isLoading } = useFetch();
-    const [application, setApplication] = useState<Application>();
+export const useApplicationDetails = ({ id }: UseApplicationDetailsProps) => {
 
-    const fetchUpdateApplication = async () => {
-      const { error, validateErrors } = await startFetch(() => updateApplication(formik.values));
+  const navigate = useNavigate();
+  const { applicationStore: { getApplicationById, updateApplication } } = useAdminStores();
+  const { startFetch, isLoading } = useFetch();
+  const { applicationDetails } = useAdminStores();
+  const application = applicationDetails.application;
 
-      if(!error) {
-        await getApplication();
-        toast('Вы успешно сохранили изменения', { type: 'success' });
-      }
-      else {
-        formik.setErrors(validateErrors);
-      }
+  const fetchUpdateApplication = async () => {
+    const { error, validateErrors } = await startFetch(() => updateApplication(formik.values));
+
+    if (!error) {
+      await getApplication();
+      toast('Вы успешно сохранили изменения', { type: 'success' });
     }
-    
-    const formik = useFormik<Application>({
-      initialValues: {
-        id: application?.id || undefined,
-        name: application?.name || '',
-        description: application?.description || '',
-        created: application?.created,
-        updated: application?.updated,
-        applicationGroups: application?.applicationGroups || []
-      },
-      onSubmit: fetchUpdateApplication,
-      enableReinitialize: true
-    })
+    else {
+      formik.setErrors(validateErrors);
+    }
+  }
 
-    const getApplication = async () => {
-      const { data, error } = await startFetch(() => getApplicationById(Number(id)));
+  const formik = useFormik<Application>({
+    initialValues: {
+      id: application?.id || undefined,
+      name: application?.name || '',
+      description: application?.description || '',
+      created: application?.created,
+      updated: application?.updated,
+      applicationGroups: application?.applicationGroups || []
+    },
+    onSubmit: fetchUpdateApplication,
+    enableReinitialize: true
+  })
 
-      if(error) {
-        navigate(-1);
-      }
-      else {
-        setApplication(data);
-        console.log(data);
-      }
+  const getApplication = async () => {
+    const { data, error } = await startFetch(() => getApplicationById(Number(id)));
 
+    if (error) {
+      navigate(-1);
+    }
+    else {
+      applicationDetails.application = data;
     }
 
-    return {
-        formik,
-        isLoading,
-        getApplication,
-        fetchUpdateApplication
-    }
+  }
+
+  return {
+    formik,
+    isLoading,
+    getApplication,
+    fetchUpdateApplication
+  }
 }

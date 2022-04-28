@@ -1,4 +1,4 @@
-import { Divider } from '@mui/material';
+import { Divider, Tab, TabsContext } from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,73 +6,68 @@ import { toast } from 'react-toastify';
 import { BreadCrumbsHOC } from '../../../HOC/BreadCrumbsHOC';
 import { WithLoader } from '../../../HOC/WithLoader';
 import { useFetch } from '../../../hooks/useFetch';
-import { useAdminStores } from '../../../store/RootStore';
+import { useAdminStores, useRootStore } from '../../../store/RootStore';
 import { Button } from '../../../UI/Button/Button';
 import { TextField } from '../../../UI/TextField/TextField';
 import { ApplicationGroups } from '../ApplicationGroups/ApplicationGroups';
 import { ADMIN_APPLICATION_BREADCUMBS } from '../BreadCrumbsPath/Application';
 import { CreateApplicationTabs } from '../CreateApplicationTabs/CreateApplicationTabs';
-import { Application } from '../Models/Application';
+import { Application } from '../Types/Application';
 import classes from './ApplicationDetails.module.scss';
 import { useApplicationDetails } from './useApplicationDetails';
+import { useTabs } from './useTabs';
+import TabContext from '@mui/lab/TabContext';
+import { Main } from './Main';
+import TabPanel from '@mui/lab/TabPanel';
+import { Toolbar } from './Toolbar';
+import { Form } from './Form';
+import { observer } from 'mobx-react';
 
-export const ApplicationDetails = () => {
+export const ApplicationDetails = observer(() => {
 
-    const { id } = useParams();
-    const { formik, fetchUpdateApplication, getApplication, isLoading } = useApplicationDetails({ id: Number(id) });
+  const { id } = useParams();
+  const { commonDictionary: { fieldTypes, getFieldTypes } } = useRootStore()
+  const { formik, fetchUpdateApplication, getApplication, isLoading } = useApplicationDetails({ id: Number(id) });
+  const { tab, setTab } = useTabs();
 
-    useEffect(() => {
-        if(id) {
-          getApplication()
-        }
-    }, [id]);
+  useEffect(() => {
+    if (id) {
+      getApplication();
+    }
 
-    console.log(formik)
-    
-    return (
-        // <BreadCrumbsHOC links={ADMIN_APPLICATION_BREADCUMBS}>
-          <div className={classes.root}>
-            <div>
-              <CreateApplicationTabs value={0} handleChange={() => console.log('hj')} />
-              <Divider />
-            </div>
+    if (!fieldTypes) {
+      getFieldTypes();
+    }
 
-            <WithLoader isLoading={isLoading}>
-                <div>
-                  <h2>Основные настройки</h2>
-                  <TextField
-                    label="Наименование"
-                    name="name"
-                    value={formik.values?.name}
-                    onChange={formik.handleChange}
-                    fullWidth
-                    error={formik.errors?.name}
-                  />
+  }, [id]);
 
-                  <TextField
-                    label="Описание"
-                    name="description"
-                    value={formik.values?.description}
-                    onChange={formik.handleChange}
-                    fullWidth
-                    multiline
-                    error={formik.errors?.description}
-                  />
-                </div>
+  return (
+    // <BreadCrumbsHOC links={ADMIN_APPLICATION_BREADCUMBS}>
+    <div className={classes.root}>
+      <div className={classes.header}>
+        <CreateApplicationTabs value={tab} handleChange={(value) => setTab(value)} />
+        <Divider />
+      </div>
 
-                <div>
-                  <h2>Группы</h2>
-                  <ApplicationGroups formik={formik} applicationGroups={formik.values?.applicationGroups || []} />
-                </div>
+      <WithLoader isLoading={isLoading}>
+        <TabContext value={tab.toString()}>
+          <TabPanel value="main">
+            <Main formik={formik} />
+          </TabPanel>
 
-                <Button
-                  onClick={formik.submitForm}
-                  disabled={formik.isSubmitting}
-                >
-                  Сохранить
-                </Button>
-            </WithLoader>
-          </div>
-        // </BreadCrumbsHOC>
-    )
-}
+          <TabPanel value="form">
+            <Form />
+          </TabPanel>
+
+          <Button
+            onClick={formik.submitForm}
+            disabled={formik.isSubmitting}
+          >
+            Сохранить
+          </Button>
+        </TabContext>
+      </WithLoader>
+    </div>
+    // </BreadCrumbsHOC>
+  )
+})

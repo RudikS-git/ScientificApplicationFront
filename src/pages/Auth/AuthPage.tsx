@@ -1,13 +1,13 @@
 import { FC, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { Login } from "../../components/Login/Login";
+import { Login } from "../../components/common/Login/Login";
 import { Token } from "../../Token";
 
 const AuthPage: FC = () => {
 
     const navigate = useNavigate();
 
-    if(Token.getInstance().content) {
+    if (Token.getInstance().content) {
         navigate("/");
     }
 

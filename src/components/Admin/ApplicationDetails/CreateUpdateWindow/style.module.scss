@@ -1,0 +1,13 @@
+
+.root {
+  & > * {
+    width: 100%;
+  }
+}
+
+.btns {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+}
