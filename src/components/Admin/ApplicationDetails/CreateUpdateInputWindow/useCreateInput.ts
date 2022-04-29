@@ -6,8 +6,13 @@ import { useAdminStores } from '../../../../store/RootStore';
 import { InputVariant } from '../../Types/Input';
 import { InputType } from '../../Types/inputVariantTypes'
 import { InputModel } from "../../../../store/admin/models/InputModel";
+import { toast } from "react-toastify";
 
-export const useCreateInput = () => {
+interface UseCreateInputProps {
+  cancel(): void
+}
+
+export const useCreateInput = ({ cancel }: UseCreateInputProps) => {
 
   const { applicationStore: { createInput, updateInput }, applicationDetails } = useAdminStores();
   const { startFetch, isLoading } = useFetch();
@@ -58,6 +63,10 @@ export const useCreateInput = () => {
 
     if (error) {
       formik.setErrors(validateErrors);
+    }
+    else {
+      toast('Вы успешно создали текстовое поле', { type: 'success' });
+      cancel();
     }
   }
 

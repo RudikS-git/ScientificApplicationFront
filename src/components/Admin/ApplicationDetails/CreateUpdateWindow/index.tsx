@@ -8,11 +8,12 @@ import classes from './style.module.scss';
 interface CreateUpdateWindowProps {
   className?: string,
   save(): void,
+  saveDisabled?: boolean,
   cancel(): void,
-  isLoading?: boolean
+  cancelDisabled?: boolean,
 }
 
-export const CreateUpdateWindow: FC<CreateUpdateWindowProps> = ({ children, className, save, cancel, isLoading }) => {
+export const CreateUpdateWindow: FC<CreateUpdateWindowProps> = ({ children, className, save, cancel, saveDisabled, cancelDisabled }) => {
 
   const currentClassName = classNames({
     [classes.root]: true,
@@ -25,11 +26,11 @@ export const CreateUpdateWindow: FC<CreateUpdateWindowProps> = ({ children, clas
 
       <Divider />
       <div className={classes.btns}>
-        <Button variant="contained" color="error" onClick={cancel} disabled={isLoading}>
+        <Button variant="contained" color="error" onClick={cancel} disabled={cancelDisabled}>
           Отменить
         </Button>
 
-        <Button variant="contained" color="primary" onClick={save} disabled={isLoading}>
+        <Button variant="contained" color="primary" onClick={save} disabled={saveDisabled}>
           Сохранить
         </Button>
       </div>

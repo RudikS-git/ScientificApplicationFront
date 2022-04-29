@@ -1,4 +1,4 @@
-import { Divider, Tab, TabsContext } from '@mui/material';
+import { ButtonGroup, Divider, Tab, TabsContext } from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
@@ -59,12 +59,24 @@ export const ApplicationDetails = observer(() => {
             <Form />
           </TabPanel>
 
-          <Button
-            onClick={formik.submitForm}
-            disabled={formik.isSubmitting}
-          >
-            Сохранить
-          </Button>
+          <div className={classes.btnGroup}>
+            <Button
+              variant='contained'
+              color="primary"
+              onClick={formik.submitForm}
+              disabled={formik.isSubmitting}
+            >
+              Сохранить
+            </Button>
+
+            <Button
+              variant='contained'
+              disabled={formik.isSubmitting}
+              color="success"
+            >
+              Опубликовать
+            </Button>
+          </div>
         </TabContext>
       </WithLoader>
     </div>

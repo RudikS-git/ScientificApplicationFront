@@ -5,20 +5,29 @@ import { Application } from '../../Types/Application';
 import { TextFieldType } from '../../Types/inputVariantTypes';
 import classes from './style.module.scss';
 
-export const TextFieldForm = (props: TextFieldType) => {
+interface TextFieldFormProps {
+  textFieldType: TextFieldType,
+  handleChange(e: React.ChangeEvent<HTMLInputElement>): void
+}
 
-  const { minLength, maxLength } = props;
+export const TextFieldForm = (props: TextFieldFormProps) => {
+
+  const { textFieldType: { minLength, maxLength }, handleChange } = props;
 
   return (
     <div className={classes.root}>
       <TextField
+        name="minLength"
         label="Минимальная длина"
         value={minLength}
+        onChange={handleChange}
       />
 
       <TextField
+        name="maxLength"
         label="Максимальная длина"
         value={maxLength}
+        onChange={handleChange}
       />
     </div>
   )
