@@ -1,0 +1,41 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.table {
+  & th:first-of-type {
+    padding-left: 32px
+  }
+
+  & td:first-of-type {
+    padding-left: 32px
+  }
+
+  & td:nth-of-type(1) {
+    width: 10%
+  }
+
+  & td:nth-of-type(2) {
+    width: 5%
+  }
+
+  & td:nth-of-type(3) {
+    width: 15%;
+  }
+
+  & td:nth-of-type(4) {
+    word-break: break-all;
+    width: 100%;
+  }
+  
+  & td:nth-of-type(5) {
+    width: 15%;
+
+    & div {
+      display: flex;
+      justify-content: center; 
+    }
+  }
+}

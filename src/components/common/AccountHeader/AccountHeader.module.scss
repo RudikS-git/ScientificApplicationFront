@@ -1,12 +1,12 @@
 .root {
     display: flex;
     justify-content: center;
-    border: 1px solid #ffffff3b;
     border-radius: 8px;
-    padding: 6px;
+    padding: 2px;
     width: 300px;
     margin-left: auto;
-    background: #FFFFFF1A;
+    box-shadow: 13px 17px 8px -10px rgba(34, 60, 80, 0.2);
+    background: var(--color-blue);
 }
 
 .btn {

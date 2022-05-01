@@ -1,6 +1,6 @@
 export enum InputVariant {
   TextField = 1,
-  NumberField,
   DateField,
+  NumberField,
   PhoneField
 }

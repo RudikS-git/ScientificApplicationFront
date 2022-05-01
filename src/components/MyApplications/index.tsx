@@ -2,10 +2,10 @@ import { Box, Divider } from "@mui/material";
 import React, { FC, useEffect } from "react";
 import { useLKStores, useRootStore } from "../../store/RootStore";
 import { Button } from "../../UI/Button/Button";
-import { ScientificTable } from "../ScientificTable/ScientificTable";
+import { Table } from "../../UI/Table/Table";
 
-export const InnovativeDevelopments: FC = () => {
-    
+export const MyApplications: FC = () => {
+
     const { applicationStore: { getApplications } } = useLKStores();
 
     useEffect(() => {
@@ -13,11 +13,11 @@ export const InnovativeDevelopments: FC = () => {
         getApplications();
 
     }, []);
-    
+
     return (
         <div>
             <Box mb="0px">
-                <Box sx={{ fontSize: "26px", padding: '24px 32px' }} >Инновационные разработки</Box>
+                <Box sx={{ fontSize: "26px", padding: '24px 32px' }} >Мои заявки</Box>
                 <Divider />
             </Box>
 
@@ -28,7 +28,7 @@ export const InnovativeDevelopments: FC = () => {
 
             <Divider />
 
-            <ScientificTable
+            <Table
                 headerRow={{
                     id: 1,
                     columns: [
@@ -43,20 +43,20 @@ export const InnovativeDevelopments: FC = () => {
                 bodyRows={[
                     {
                         id: 1,
-                        columns: ["1", "06.02.2022", "Тестовый проект", "3131", "", 
-                        <div>
-                            <Button>Изменить</Button> 
-                            <Button>Удалить</Button> 
-                        </div>],
+                        columns: ["1", "06.02.2022", "Тестовый проект", "3131", "",
+                            <div>
+                                <Button>Изменить</Button>
+                                <Button>Удалить</Button>
+                            </div>],
                     },
 
                     {
                         id: 2,
-                        columns: ["2", "01.01.2022", "Мой проект", "43442", "", 
-                        <div>
-                            <Button>Изменить</Button> 
-                            <Button>Удалить</Button> 
-                        </div>],
+                        columns: ["2", "01.01.2022", "Мой проект", "43442", "",
+                            <div>
+                                <Button>Изменить</Button>
+                                <Button>Удалить</Button>
+                            </div>],
                     },
                 ]}
             />

@@ -26,11 +26,19 @@ export const CreateUpdateWindow: FC<CreateUpdateWindowProps> = ({ children, clas
 
       <Divider />
       <div className={classes.btns}>
-        <Button variant="contained" color="error" onClick={cancel} disabled={cancelDisabled}>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={cancel}
+          disabled={cancelDisabled}>
           Отменить
         </Button>
 
-        <Button variant="contained" color="primary" onClick={save} disabled={saveDisabled}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={save}
+          disabled={saveDisabled}>
           Сохранить
         </Button>
       </div>

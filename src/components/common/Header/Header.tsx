@@ -11,7 +11,7 @@ const Header: FC = () => {
 
     return (
         <header className={classes.root}>
-            <Link to="/">
+            <Link className={classes.logoBlock} to="/">
                 <img src="/logo.png" alt="logo" />
             </Link>
             <AccountHeader />

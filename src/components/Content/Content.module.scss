@@ -2,4 +2,9 @@
     display: flex;
     width: 100%;
     min-height: 100vh;
+    background: #f4f4f4b0;
+
+    & > * {
+        margin-top: 12px;
+    }
 }

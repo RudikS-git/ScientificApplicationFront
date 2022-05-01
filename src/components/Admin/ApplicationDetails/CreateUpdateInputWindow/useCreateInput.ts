@@ -1,36 +1,79 @@
 import { TextFieldType } from "../../Types/inputVariantTypes";
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFetch } from '../../../../hooks/useFetch';
 import { useAdminStores } from '../../../../store/RootStore';
 import { InputVariant } from '../../Types/Input';
-import { InputType } from '../../Types/inputVariantTypes'
+import { VariantInputTypes } from '../../Types/inputVariantTypes'
 import { InputModel } from "../../../../store/admin/models/InputModel";
 import { toast } from "react-toastify";
 
 interface UseCreateInputProps {
+  id?: number,
   cancel(): void
 }
 
-export const useCreateInput = ({ cancel }: UseCreateInputProps) => {
+export const useCreateInput = ({ id, cancel }: UseCreateInputProps) => {
 
   const { applicationStore: { createInput, updateInput }, applicationDetails } = useAdminStores();
   const { startFetch, isLoading } = useFetch();
 
-  const formik = useFormik<InputType>({
+  const formik = useFormik<VariantInputTypes>({
     initialValues: {
-      groupId: undefined,
-      id: undefined,
-      isRequired: undefined,
-      label: undefined,
-      description: undefined,
-      field: { id: InputVariant.TextField, value: {} }
+      groupId: applicationDetails.inputModalData?.groupId,
+      id: applicationDetails.inputModalData?.id,
+      isRequired: applicationDetails.inputModalData?.isRequired,
+      label: applicationDetails.inputModalData?.label || '',
+      description: applicationDetails.inputModalData?.description || '',
+      inputUnderTypeId: applicationDetails.inputModalData?.inputUnderTypeId || InputVariant.TextField,
+      inputFieldId: applicationDetails.inputModalData?.inputFieldId
     },
-    onSubmit: () => _createInput(),
+    onSubmit: () => _createUpdateInput(),
     enableReinitialize: true
   })
 
-  const _createInput = async () => {
+  useEffect(() => {
+
+    if (formik?.values?.inputUnderTypeId !== applicationDetails.inputModalData?.inputUnderTypeId) {
+      formik.setFieldValue('id', undefined);
+    }
+
+    switch (formik?.values?.inputUnderTypeId) {
+      case InputVariant.TextField:
+        if (applicationDetails.inputModalData?.inputUnderTypeId === InputVariant.TextField) {
+          formik.setFieldValue('minLength', applicationDetails.inputModalData?.minLength || 0)
+          formik.setFieldValue('maxLength', applicationDetails.inputModalData?.maxLength || 0)
+        }
+
+        break;
+
+      case InputVariant.PhoneField:
+        if (applicationDetails.inputModalData?.inputUnderTypeId === InputVariant.PhoneField) {
+          formik.setFieldValue('type', applicationDetails.inputModalData?.type || '')
+        }
+
+        break;
+
+      case InputVariant.NumberField:
+        if (applicationDetails.inputModalData?.inputUnderTypeId === InputVariant.NumberField) {
+          formik.setFieldValue('min', applicationDetails.inputModalData?.min || 0)
+          formik.setFieldValue('max', applicationDetails.inputModalData?.max || 0)
+        }
+
+        break;
+
+      case InputVariant.DateField:
+        if (applicationDetails.inputModalData?.inputUnderTypeId === InputVariant.DateField) {
+          formik.setFieldValue('minDateTime', applicationDetails.inputModalData?.minDateTime)
+          formik.setFieldValue('maxDateTime', applicationDetails.inputModalData?.maxDateTime)
+        }
+
+        break;
+    }
+
+  }, [formik?.values?.inputUnderTypeId])
+
+  const _createUpdateInput = async () => {
 
     const inputModel: Partial<InputModel> = {
       groupId: formik.values.groupId,
@@ -38,40 +81,72 @@ export const useCreateInput = ({ cancel }: UseCreateInputProps) => {
       isRequired: formik.values.isRequired,
       label: formik.values.label,
       description: formik.values.description,
-      inputUnderTypeId: formik.values.field.id
+      inputUnderTypeId: formik.values.inputUnderTypeId,
+      inputFieldId: formik.values.inputFieldId
     }
 
-    switch (formik.values.field.id) {
+
+    switch (formik.values.inputUnderTypeId) {
       case InputVariant.TextField:
-        inputModel.textField = formik.values.field.value;
+        inputModel.textField = {
+          inputUnderTypeId: formik.values.inputUnderTypeId,
+          minLength: formik.values.minLength,
+          maxLength: formik.values.maxLength,
+        };
         break;
 
       case InputVariant.PhoneField:
-        inputModel.numberPhoneField = formik.values.field.value;
+        inputModel.numberPhoneField = {
+          inputUnderTypeId: formik.values.inputUnderTypeId,
+          type: formik.values.type,
+        }
         break;
 
       case InputVariant.NumberField:
-        inputModel.numberField = formik.values.field.value;
+        inputModel.numberField = {
+          inputUnderTypeId: formik.values.inputUnderTypeId,
+          min: formik.values.min,
+          max: formik.values.max,
+        }
         break;
 
       case InputVariant.DateField:
-        inputModel.dateField = formik.values.field.value;
+        inputModel.dateField = {
+          inputUnderTypeId: formik.values.inputUnderTypeId,
+          minDateTime: formik.values.minDateTime,
+          maxDateTime: formik.values.maxDateTime,
+        }
         break;
     }
 
-    const { error, validateErrors } = await startFetch(() => createInput(inputModel));
+    let request;
+    if (!inputModel.id) {
+      request = () => createInput(inputModel);
+    }
+    else {
+      request = () => updateInput(inputModel);
+    }
+
+    const { error, validateErrors } = await startFetch(request);
 
     if (error) {
       formik.setErrors(validateErrors);
     }
     else {
+
       toast('Вы успешно создали текстовое поле', { type: 'success' });
       cancel();
     }
   }
 
+  const cancelModal = () => {
+    applicationDetails.inputModalData = undefined;
+    cancel();
+  }
+
   return {
     formik,
-    applicationDetails
+    applicationDetails,
+    cancelModal
   }
 }

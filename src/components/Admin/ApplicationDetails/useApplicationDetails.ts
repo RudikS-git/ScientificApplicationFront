@@ -52,7 +52,6 @@ export const useApplicationDetails = ({ id }: UseApplicationDetailsProps) => {
     else {
       applicationDetails.application = data;
     }
-
   }
 
   return {

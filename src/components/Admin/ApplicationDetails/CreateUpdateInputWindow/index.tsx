@@ -20,32 +20,32 @@ interface CreateUpdateInputWindowProps {
 
 export const CreateUpdateInputWindow = ({ cancel }: CreateUpdateInputWindowProps) => {
 
-  const { formik, applicationDetails } = useCreateInput({ cancel: cancel });
+  const { formik, applicationDetails, cancelModal } = useCreateInput({ cancel: cancel });
   const application = applicationDetails.application;
-  const { groupId, isRequired, label, description, field } = formik.values;
+  const { groupId, isRequired, label, description, inputUnderTypeId } = formik.values;
 
   const renderSpecificFields = (inputType: InputVariant | undefined) => {
-    switch (formik.values.field?.id) {
+    switch (inputUnderTypeId) {
       case InputVariant.TextField:
         return <TextFieldForm
-          textFieldType={formik.values.field.value}
+          textFieldType={formik.values}
           handleChange={formik.handleChange}
         />
 
       case InputVariant.PhoneField:
         return <PhoneFieldForm
-          phoneFieldType={formik.values.field.value}
+          phoneFieldType={formik.values}
           handleChange={formik.handleChange} />
 
       case InputVariant.DateField:
         return <DateFieldForm
-          dateFieldType={formik.values.field.value}
+          dateFieldType={formik.values}
           handleChange={formik.handleChange}
         />
 
       case InputVariant.NumberField:
         return <NumberFieldForm
-          numberFieldType={formik.values.field.value}
+          numberFieldType={formik.values}
           handleChange={formik.handleChange} />
 
       default:
@@ -57,10 +57,9 @@ export const CreateUpdateInputWindow = ({ cancel }: CreateUpdateInputWindowProps
     <CreateUpdateWindow
       className={classes.root}
       save={formik.submitForm}
-      cancel={cancel}
+      cancel={cancelModal}
       saveDisabled={formik.isSubmitting || !formik.isValid || !formik.dirty}
       cancelDisabled={formik.isSubmitting}
-
     >
       <div className={classes.groupBlock}>
         <Select
@@ -82,7 +81,7 @@ export const CreateUpdateInputWindow = ({ cancel }: CreateUpdateInputWindowProps
           label: "Обязательное поле"
         }}
         checkBoxProps={{
-          value: isRequired,
+          checked: isRequired,
           onChange: (e) => formik.setFieldValue('isRequired', e.target.checked)
         }}
 
@@ -106,8 +105,8 @@ export const CreateUpdateInputWindow = ({ cancel }: CreateUpdateInputWindowProps
 
       <Select
         label="Тип"
-        value={formik.values.field.id}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => formik.setFieldValue('field', { id: e.target.value, value: {} })}
+        value={inputUnderTypeId}
+        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => formik.setFieldValue('inputUnderTypeId', e.target.value)}
       >
         {
           InputTypes.map(({ id, title }) => <MenuItem value={id} key={id}>{title}</MenuItem>)
@@ -115,12 +114,12 @@ export const CreateUpdateInputWindow = ({ cancel }: CreateUpdateInputWindowProps
       </Select>
 
       {
-        field?.id && (
+        inputUnderTypeId && (
           <>
             <Divider />
 
             <div className={classes.specificFields}>
-              {renderSpecificFields(field?.id)}
+              {renderSpecificFields(inputUnderTypeId)}
             </div>
           </>
         )

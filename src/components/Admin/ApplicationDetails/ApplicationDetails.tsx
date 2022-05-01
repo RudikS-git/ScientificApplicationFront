@@ -19,7 +19,6 @@ import { useTabs } from './useTabs';
 import TabContext from '@mui/lab/TabContext';
 import { Main } from './Main';
 import TabPanel from '@mui/lab/TabPanel';
-import { Toolbar } from './Toolbar';
 import { Form } from './Form';
 import { observer } from 'mobx-react';
 
@@ -46,7 +45,6 @@ export const ApplicationDetails = observer(() => {
     <div className={classes.root}>
       <div className={classes.header}>
         <CreateApplicationTabs value={tab} handleChange={(value) => setTab(value)} />
-        <Divider />
       </div>
 
       <WithLoader isLoading={isLoading}>

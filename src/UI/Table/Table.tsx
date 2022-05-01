@@ -4,20 +4,21 @@ import {
     TableBody,
     TableHead,
     TableRow,
-    Paper,
-    Table,
+    Table as MuiTable
 } from "@mui/material";
 import React, { FC, ReactNode, useEffect } from "react";
-import { StyledTable } from "./ScientificTable.styles";
+import classes from "./Table.module.scss";
 import TablePagination from '@mui/material/TablePagination';
+import classNames from "classnames";
 
-export interface IScientificTableProps {
-    headerRow: ITableRow;
-    bodyRows?: Array<ITableRow>;
+export interface TableProps {
+    className?: string,
+    headerRow: TableRow;
+    bodyRows?: Array<TableRow>;
     pagination?: Pagination
 }
 
-export interface ITableRow {
+export interface TableRow {
     id: number;
     columns: Array<ReactNode | string>;
 }
@@ -31,7 +32,8 @@ export interface Pagination {
     changeRowsPerPageHandler(perPage: number): void
 }
 
-export const ScientificTable: FC<IScientificTableProps> = ({
+export const Table: FC<TableProps> = ({
+    className,
     headerRow,
     bodyRows,
     pagination
@@ -41,8 +43,13 @@ export const ScientificTable: FC<IScientificTableProps> = ({
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
+    const currentClassname = classNames({
+        [classes.root]: true,
+        [className || '']: true
+    })
+
     useEffect(() => {
-        if(iPage) {
+        if (iPage) {
             setPage(Number(iPage) - 1);
         }
 
@@ -50,7 +57,7 @@ export const ScientificTable: FC<IScientificTableProps> = ({
 
     useEffect(() => {
 
-        if(iPerPage) {
+        if (iPerPage) {
             setRowsPerPage(iPerPage);
         }
 
@@ -63,7 +70,7 @@ export const ScientificTable: FC<IScientificTableProps> = ({
         setPage(newPage);
         changePageHandler && changePageHandler(newPage + 1, rowsPerPage);
     };
-    
+
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -74,7 +81,7 @@ export const ScientificTable: FC<IScientificTableProps> = ({
 
     return (
         <TableContainer component={'div'}>
-            <StyledTable aria-label="table">
+            <MuiTable className={currentClassname} aria-label="table">
                 <TableHead>
                     <TableRow>
                         {headerRow?.columns.map((it, index) => (
@@ -94,7 +101,7 @@ export const ScientificTable: FC<IScientificTableProps> = ({
                         );
                     })}
                 </TableBody>
-            </StyledTable>
+            </MuiTable>
 
             {
                 count && (
@@ -109,7 +116,7 @@ export const ScientificTable: FC<IScientificTableProps> = ({
                     />
                 )
             }
-            
+
         </TableContainer>
     );
 };

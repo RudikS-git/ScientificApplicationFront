@@ -1,13 +1,33 @@
 import React from 'react'
+import { Button } from '../../../../UI/Button/Button';
+import { Table } from '../../../../UI/Table/Table';
+import { FieldTable } from '../FieldTable';
 import { Toolbar } from '../Toolbar'
 import { useForm } from './useForm';
+import classes from './Form.module.scss';
+import { useAdminStores } from '../../../../store/RootStore';
+import { observer } from 'mobx-react';
 
-export const Form = () => {
+export const Form = observer(() => {
+
+  const { applicationStore: { createInput, updateInput }, applicationDetails } = useAdminStores();
 
   return (
-    <div>
+    <div className={classes.root}>
       <Toolbar />
+
+      {
+        applicationDetails.application?.applicationGroups?.map(it => {
+          return (
+            <FieldTable
+              key={it.id}
+              groupName={it.name}
+              groupId={it.id}
+              fields={it.inputFields} />
+          )
+        })
+      }
 
     </div>
   )
-}
+})

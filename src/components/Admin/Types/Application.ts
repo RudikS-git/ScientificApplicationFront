@@ -1,4 +1,5 @@
 import { InputVariant } from "./Input"
+import { VariantInputTypes } from "./inputVariantTypes"
 
 export interface Application {
     id?: number,
@@ -12,18 +13,13 @@ export interface Application {
 export interface ApplicationGroup {
     id?: number,
     name?: string,
+    inputFields?: VariantInputTypes[],
     selectFields?: AAdminSelect[],
-    fields?: AAdminField[],
     fieldSets?: AAdminFieldSet[]
 }
 
 export interface AAdminSelect {
     label: string
-}
-
-export interface AAdminField {
-    label: string,
-    inputUnderTypeId: InputVariant
 }
 
 export interface AAdminFieldSet {

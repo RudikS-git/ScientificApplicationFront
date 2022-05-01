@@ -1,9 +1,17 @@
 import React, { useState } from 'react'
 
-export const useModal = () => {
+export interface UseModalResponse {
+    isOpen: boolean,
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    open(): void,
+    close(): void,
+    toggle(): void
+}
+
+export const useModal = (): UseModalResponse => {
 
     const [isOpen, setIsOpen] = useState(false);
-    
+
     return {
         isOpen,
         setIsOpen,

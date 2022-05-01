@@ -13,6 +13,7 @@ export const appBarStyles = {
     "& a": {
         color: "#000000b5",
         textDecoration: "none",
+        width: '100%'
     },
 
     "& ul": {
@@ -21,5 +22,11 @@ export const appBarStyles = {
 
     "& li": {
         marginBottom: 16
+    },
+
+    "& button": {
+        display: 'flex',
+        'justify-content': 'flex-start',
+        color: 'var(--color-blue)'
     }
 };
