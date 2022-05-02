@@ -1,12 +1,13 @@
-import { TextFieldType } from "../../Types/inputVariantTypes";
+import { TextFieldType } from "../../../Types/inputVariantTypes";
 import { useFormik } from 'formik'
 import React, { useEffect } from 'react'
 import { useFetch } from '../../../../hooks/useFetch';
 import { useAdminStores } from '../../../../store/RootStore';
-import { InputVariant } from '../../Types/Input';
-import { VariantInputTypes } from '../../Types/inputVariantTypes'
+import { InputVariant } from '../../../Types/Input';
+import { VariantInputTypes } from '../../../Types/inputVariantTypes'
 import { InputModel } from "../../../../store/admin/models/InputModel";
 import { toast } from "react-toastify";
+import { ManageApplicationStates } from "../../Types/Application";
 
 interface UseCreateInputProps {
   id?: number,
@@ -26,7 +27,7 @@ export const useCreateInput = ({ id, cancel }: UseCreateInputProps) => {
       label: applicationDetails.inputModalData?.label || '',
       description: applicationDetails.inputModalData?.description || '',
       inputUnderTypeId: applicationDetails.inputModalData?.inputUnderTypeId || InputVariant.TextField,
-      inputFieldId: applicationDetails.inputModalData?.inputFieldId
+      inputFieldId: applicationDetails.inputModalData?.inputFieldId,
     },
     onSubmit: () => _createUpdateInput(),
     enableReinitialize: true

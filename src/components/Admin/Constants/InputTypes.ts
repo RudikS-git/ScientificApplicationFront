@@ -1,4 +1,4 @@
-import { InputVariant } from "../Types/Input";
+import { InputVariant } from "../../Types/Input";
 
 export const InputTypes = [
   {

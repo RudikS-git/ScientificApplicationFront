@@ -1,21 +1,21 @@
 import axios from "axios";
 import { configure, runInAction } from "mobx";
 import React from "react";
-import { Application } from "../../components/Admin/Types/Application";
+import { Application, ManageApplicationStates } from "../../components/Admin/Types/Application";
 import { InputModel } from "./models/InputModel";
 import { PagedItems } from "../../Models/PagedItems";
 import { rootStore } from "../RootStore";
 
 export class AdminApplicationStore {
 
-    pagedApplications?: PagedItems<any>;
+    pagedApplications?: PagedItems<Application>;
 
     constructor() {
         // do nothing
     }
 
     getApplications = async (page = 1, pageSize = 15) => {
-        const { data } = await axios.get(`/api/application/${page}/${pageSize}`);
+        const { data } = await axios.get(`/api/admin/application/${page}/${pageSize}`);
 
         runInAction(() => {
             this.pagedApplications = data;
@@ -24,31 +24,35 @@ export class AdminApplicationStore {
         return data;
     }
 
+    setManageApplicationState = async (id: number, state: ManageApplicationStates) => {
+        return axios.patch(`/api/admin/application/${id}/state/${state}`);
+    }
+
     getApplicationById = (id: number) => {
-        return axios.get(`/api/application/${id}`);
+        return axios.get(`/api/admin/application/${id}`);
     }
 
     deleteApplicationById = (id: number) => {
-        return axios.delete(`/api/application/${id}`);
+        return axios.delete(`/api/admin/application/${id}`);
     }
 
-    createApplication = async (createApplicationModel: Application) => {
-        return axios.post(`/api/application`, createApplicationModel);
+    createApplication = async (createApplicationModel: Omit<Application, 'manageApplicationState'>) => {
+        return axios.post(`/api/admin/application`, createApplicationModel);
     }
 
-    updateApplication = async (createApplicationModel: Application) => {
-        return axios.put(`/api/application/${createApplicationModel.id}`, createApplicationModel);
+    updateApplication = async (createApplicationModel: Omit<Application, 'manageApplicationState'>) => {
+        return axios.put(`/api/admin/application/${createApplicationModel.id}`, createApplicationModel);
     }
 
     createInput = async (inputModel: Partial<InputModel>) => {
-        return axios.post(`/api/input-field`, inputModel);
+        return axios.post(`/api/admin/input-field`, inputModel);
     }
 
     updateInput = async (inputModel: Partial<InputModel>) => {
-        return axios.put(`/api/input-field`, inputModel);
+        return axios.put(`/api/admin/input-field`, inputModel);
     }
 
     deleteInput = async (inputId: number) => {
-        return axios.delete(`/api/input-field/${inputId}`);
+        return axios.delete(`/api/admin/input-field/${inputId}`);
     }
 }

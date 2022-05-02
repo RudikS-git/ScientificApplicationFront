@@ -1,4 +1,4 @@
-import { InputVariant } from "../components/Admin/Types/Input";
+import { InputVariant } from "../components/Types/Input";
 
 export const INPUT_TYPES = {
   [InputVariant.NumberField]: "Число",

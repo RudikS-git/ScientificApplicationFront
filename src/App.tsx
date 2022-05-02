@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 import "./App.css";
 import Pages from "./pages";
-import CommonContainer from "./components/CommonContainer/CommonContainer";
+import CommonContainer from "./components/common/CommonContainer/CommonContainer";
 import { MainStoreHOC } from "./store/MainStoreHOC";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import './fonts/font.css';

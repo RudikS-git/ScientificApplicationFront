@@ -1,6 +1,6 @@
 import { TextField } from "./../../../UI/TextField/TextField";
-import { InputVariant } from "../../../components/Admin/Types/Input";
-import { DateFieldType, NumberFieldType, PhoneFieldType, TextFieldType } from "../../../components/Admin/Types/inputVariantTypes";
+import { InputVariant } from "../../../components/Types/Input";
+import { DateFieldType, NumberFieldType, PhoneFieldType, TextFieldType } from "../../../components/Types/inputVariantTypes";
 
 export interface InputModel {
   groupId?: number,

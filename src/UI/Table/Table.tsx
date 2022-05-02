@@ -19,7 +19,7 @@ export interface TableProps {
 }
 
 export interface TableRow {
-    id: number;
+    id: number | undefined;
     columns: Array<ReactNode | string>;
 }
 

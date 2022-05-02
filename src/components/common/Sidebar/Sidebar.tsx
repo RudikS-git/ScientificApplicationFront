@@ -3,10 +3,10 @@ import React from "react";
 import { StyledSidebar, appBarStyles } from "./Sidebar.styles";
 import { styled } from "@mui/styles";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TopicIcon from '@mui/icons-material/Topic';
-import { Button } from "../../UI/Button/Button";
+import { Button } from "../../../UI/Button/Button";
 import classes from './Sidebar.module.scss';
 import classNames from "classnames";
 import { useLocation } from "react-router";
@@ -28,6 +28,17 @@ const Sidebar = () => {
                                 fullWidth
                             >
                                 Мои заявки
+                            </Button>
+                        </Link>
+                    </ListItem>
+
+                    <ListItem className={classNames({ [classes.item]: true, [classes.active]: location.pathname.includes('/admin/moderate') })}>
+                        <Link to={"/admin/moderate"}>
+                            <Button
+                                startIcon={<ManageAccountsIcon />}
+                                fullWidth
+                            >
+                                Модерация
                             </Button>
                         </Link>
                     </ListItem>

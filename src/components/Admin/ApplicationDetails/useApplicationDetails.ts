@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useFetch } from '../../../hooks/useFetch';
 import { useAdminStores } from '../../../store/RootStore';
-import { Application } from '../Types/Application';
+import { Application, ManageApplicationStates } from '../Types/Application';
 
 interface UseApplicationDetailsProps {
   id: number
@@ -13,7 +13,7 @@ interface UseApplicationDetailsProps {
 export const useApplicationDetails = ({ id }: UseApplicationDetailsProps) => {
 
   const navigate = useNavigate();
-  const { applicationStore: { getApplicationById, updateApplication } } = useAdminStores();
+  const { applicationStore: { getApplicationById, updateApplication, setManageApplicationState } } = useAdminStores();
   const { startFetch, isLoading } = useFetch();
   const { applicationDetails } = useAdminStores();
   const application = applicationDetails.application;
@@ -37,7 +37,8 @@ export const useApplicationDetails = ({ id }: UseApplicationDetailsProps) => {
       description: application?.description || '',
       created: application?.created,
       updated: application?.updated,
-      applicationGroups: application?.applicationGroups || []
+      applicationGroups: application?.applicationGroups || [],
+      manageApplicationState: application?.manageApplicationState || ManageApplicationStates.Draft
     },
     onSubmit: fetchUpdateApplication,
     enableReinitialize: true
@@ -54,10 +55,22 @@ export const useApplicationDetails = ({ id }: UseApplicationDetailsProps) => {
     }
   }
 
+  const _setManageApplicationState = async (state: ManageApplicationStates) => {
+    const { data, error } = await startFetch(() => setManageApplicationState(Number(id), state));
+
+    if (error) {
+      toast("Не удалось изменить статус заявки", { type: 'error' })
+    }
+    else {
+      await getApplication();
+    }
+  }
+
   return {
     formik,
     isLoading,
     getApplication,
-    fetchUpdateApplication
+    fetchUpdateApplication,
+    setManageApplicationState: _setManageApplicationState
   }
 }

@@ -1,5 +1,5 @@
-import { InputVariant } from "./Input"
-import { VariantInputTypes } from "./inputVariantTypes"
+import { InputVariant } from "../../Types/Input"
+import { VariantInputTypes } from "../../Types/inputVariantTypes"
 
 export interface Application {
     id?: number,
@@ -7,7 +7,13 @@ export interface Application {
     description?: string
     created?: Date,
     updated?: Date,
-    applicationGroups?: ApplicationGroup[]
+    applicationGroups?: ApplicationGroup[],
+    manageApplicationState: ManageApplicationStates
+}
+
+export enum ManageApplicationStates {
+    Draft = 1,
+    Published
 }
 
 export interface ApplicationGroup {

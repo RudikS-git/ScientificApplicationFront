@@ -1,0 +1,20 @@
+.cards {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 16px;
+  align-items: center;
+
+  padding: 32px;
+
+  &  a {
+    text-decoration: none;
+  }
+}
+
+.header {
+  color: var(--color-gray);
+  font-size: 2rem;
+  padding: 24px 32px;
+}

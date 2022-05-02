@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import React from 'react'
 import { TextField } from '../../../../UI/TextField/TextField'
 import { Application } from '../../Types/Application';
-import { TextFieldType } from '../../Types/inputVariantTypes';
+import { TextFieldType } from '../../../Types/inputVariantTypes';
 import classes from './style.module.scss';
 
 interface TextFieldFormProps {

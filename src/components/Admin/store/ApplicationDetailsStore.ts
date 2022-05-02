@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { UseModalResponse } from "../../../hooks/useModal";
 import { Application } from "../Types/Application";
-import { VariantInputTypes } from "../Types/inputVariantTypes";
+import { VariantInputTypes } from "../../Types/inputVariantTypes";
 
 export class ApplicationDetailsStore {
 

@@ -6,7 +6,7 @@ import { useFetch } from '../../../../hooks/useFetch';
 import { useAdminStores } from '../../../../store/RootStore';
 import { Button } from '../../../../UI/Button/Button'
 import { Table } from '../../../../UI/Table/Table'
-import { VariantInputTypes } from '../../Types/inputVariantTypes';
+import { VariantInputTypes } from '../../../Types/inputVariantTypes';
 import classes from './style.module.scss';
 
 interface FieldTableProps {

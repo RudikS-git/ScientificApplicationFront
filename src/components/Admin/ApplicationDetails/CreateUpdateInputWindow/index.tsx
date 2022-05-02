@@ -7,7 +7,7 @@ import classes from './CreateInput.module.scss';
 import { useCreateInput } from './useCreateInput';
 import { Divider, MenuItem } from '@mui/material';
 import { Select } from '../../../../UI/Select';
-import { InputVariant } from '../../Types/Input';
+import { InputVariant } from '../../../Types/Input';
 import { TextFieldForm } from '../Inputs/TextFieldForm';
 import { NumberFieldForm } from '../Inputs/NumberFieldForm';
 import { DateFieldForm } from '../Inputs/DateFieldForm';

@@ -12,7 +12,7 @@ import { TextField } from '../../../UI/TextField/TextField';
 import { ApplicationGroups } from '../ApplicationGroups/ApplicationGroups';
 import { ADMIN_APPLICATION_BREADCUMBS } from '../BreadCrumbsPath/Application';
 import { CreateApplicationTabs } from '../CreateApplicationTabs/CreateApplicationTabs';
-import { Application } from '../Types/Application';
+import { Application, ManageApplicationStates } from '../Types/Application';
 import classes from './ApplicationDetails.module.scss';
 import { useApplicationDetails } from './useApplicationDetails';
 import { useTabs } from './useTabs';
@@ -26,7 +26,7 @@ export const ApplicationDetails = observer(() => {
 
   const { id } = useParams();
   const { commonDictionary: { fieldTypes, getFieldTypes } } = useRootStore()
-  const { formik, fetchUpdateApplication, getApplication, isLoading } = useApplicationDetails({ id: Number(id) });
+  const { formik, fetchUpdateApplication, getApplication, isLoading, setManageApplicationState } = useApplicationDetails({ id: Number(id) });
   const { tab, setTab } = useTabs();
 
   useEffect(() => {
@@ -67,17 +67,32 @@ export const ApplicationDetails = observer(() => {
               Сохранить
             </Button>
 
-            <Button
-              variant='contained'
-              disabled={formik.isSubmitting}
-              color="success"
-            >
-              Опубликовать
-            </Button>
+            {
+              formik.values.manageApplicationState === ManageApplicationStates.Published ?
+                <Button
+                  variant='contained'
+                  disabled={formik.isSubmitting}
+                  color="inherit"
+                  onClick={() => setManageApplicationState(ManageApplicationStates.Draft)}
+                >
+                  Перевести в черновик
+                </Button>
+                :
+                <Button
+                  variant='contained'
+                  disabled={formik.isSubmitting}
+                  color="success"
+                  onClick={() => setManageApplicationState(ManageApplicationStates.Published)}
+                >
+                  Опубликовать
+                </Button>
+            }
+
+
           </div>
         </TabContext>
       </WithLoader>
-    </div>
+    </div >
     // </BreadCrumbsHOC>
   )
 })

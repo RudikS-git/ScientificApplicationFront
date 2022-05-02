@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { refreshToken } from "../api/refreshToken";
 import ManageApplications from "../components/Admin/ManageApplications/ManageApplications";
 import { Login } from "../components/common/Login/Login";
-import Main from "../components/Main/Main";
+import Main from "../components/common/Main/Main";
 import UnknownPage from "../components/common/UnknownPage/UnknownPage";
 import { Welcome } from "../components/common/Welcome/Welcome";
 import { useRootStore } from "../store/RootStore";

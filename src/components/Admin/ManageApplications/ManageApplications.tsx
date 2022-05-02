@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router';
 import { useLocation } from 'react-router';
+import { MANAGE_APPLICATION_STATES } from '../../../constants/manageApplicationStates';
 import { WithLoader } from '../../../HOC/WithLoader';
 import { useFetch } from '../../../hooks/useFetch';
 import { useModal } from '../../../hooks/useModal';
@@ -13,6 +14,7 @@ import Loader from '../../../UI/Loader/Loader';
 import { Table } from '../../../UI/Table/Table';
 import { CreateApplicationModal } from '../CreateApplicationModal/CreateApplicationModal';
 import { Toolbar } from '../Toolbar/Toolbar';
+import { Application } from '../Types/Application';
 import classes from './ManageApplications.module.scss';
 import { useApplication } from './useApplication';
 
@@ -78,14 +80,21 @@ const ManageApplications = () => {
             ],
           }}
           bodyRows={
-            pagedApplications?.items?.map((it: any) => {
+            pagedApplications?.items?.map((it: Application) => {
               return {
                 id: it.id,
-                columns: [it.id, dayjs(it.created).format('DD.MM.YYYY'), it.name, `RN-${it.id}`, "status",
-                <div className={classes.manageBlock}>
-                  <Button onClick={() => navigate(`/admin/applications/details/${it.id}`)}>Подробнее</Button>
-                  <Button onClick={() => deleteApplication(it.id)}>Удалить</Button>
-                </div>],
+                columns: [
+                  it.id?.toString(),
+                  dayjs(it.created).format('DD.MM.YYYY'),
+                  it.name,
+                  `RN-${it.id}`,
+                  MANAGE_APPLICATION_STATES[it.manageApplicationState],
+
+                  <div className={classes.manageBlock}>
+                    <Button onClick={() => navigate(`/admin/applications/details/${it.id}`)}>Подробнее</Button>
+                    <Button onClick={() => deleteApplication(it.id)}>Удалить</Button>
+                  </div>
+                ],
               }
             })
 

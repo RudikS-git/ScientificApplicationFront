@@ -1,6 +1,6 @@
 import React from 'react'
 import { TextField } from '../../../../UI/TextField/TextField'
-import { NumberFieldType } from '../../Types/inputVariantTypes';
+import { NumberFieldType } from '../../../Types/inputVariantTypes';
 import classes from './style.module.scss';
 
 interface NumberFieldForm {
