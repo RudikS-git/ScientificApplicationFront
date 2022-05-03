@@ -30,13 +30,6 @@ export const MyApplications: FC = observer(() => {
                 <h1 className={classes.header}>Мои заявки</h1>
                 <Divider />
 
-                {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <Button>Новая заявка</Button>
-                    <Button>Фильтрация</Button>
-                </Box>
-
-                <Divider /> */}
-
                 <div className={classes.cards}>
                     {
                         pagedApplications?.items?.map(it => {
@@ -48,41 +41,6 @@ export const MyApplications: FC = observer(() => {
                         })
                     }
                 </div>
-
-
-
-                {/* <Table
-                    headerRow={{
-                        id: 1,
-                        columns: [
-                            "ID",
-                            "Дата",
-                            "Наименованиие",
-                            "Рег.номер",
-                            "Статус",
-                            "",
-                        ],
-                    }}
-                    bodyRows={[
-                        {
-                            id: 1,
-                            columns: ["1", "06.02.2022", "Тестовый проект", "3131", "",
-                                <div>
-                                    <Button>Изменить</Button>
-                                    <Button>Удалить</Button>
-                                </div>],
-                        },
-
-                        {
-                            id: 2,
-                            columns: ["2", "01.01.2022", "Мой проект", "43442", "",
-                                <div>
-                                    <Button>Изменить</Button>
-                                    <Button>Удалить</Button>
-                                </div>],
-                        },
-                    ]}
-                /> */}
             </div>
         </WithLoader>
     );

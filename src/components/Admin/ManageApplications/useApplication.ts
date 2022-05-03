@@ -36,9 +36,6 @@ export const useApplication = ({ submitHandler }: useApplicationProps) => {
                 name: validateErrors.name?.length != 0 && validateErrors?.name[0],
             });
         }
-        else if (data) {
-            console.log(data)
-        }
 
         submitHandler(result);
     }
@@ -49,7 +46,7 @@ export const useApplication = ({ submitHandler }: useApplicationProps) => {
 
             console.log(error)
             if (!error) {
-                //navigate(0);
+                toast("Вы успешно удалили заявку", { type: 'error' })
             }
         }
         else {
@@ -68,8 +65,5 @@ export const useApplication = ({ submitHandler }: useApplicationProps) => {
         formik,
         deleteApplication
     }
-}
-function Application(arg0: { groups: { name: string; }[]; name: string; }, Application: any): import("axios").AxiosPromise<any> | Promise<any> {
-    throw new Error('Function not implemented.');
 }
 

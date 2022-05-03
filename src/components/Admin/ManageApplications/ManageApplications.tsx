@@ -92,7 +92,7 @@ const ManageApplications = () => {
 
                   <div className={classes.manageBlock}>
                     <Button onClick={() => navigate(`/admin/applications/details/${it.id}`)}>Подробнее</Button>
-                    <Button onClick={() => deleteApplication(it.id)}>Удалить</Button>
+                    <Button color="error" onClick={() => deleteApplication(it.id)}>Удалить</Button>
                   </div>
                 ],
               }

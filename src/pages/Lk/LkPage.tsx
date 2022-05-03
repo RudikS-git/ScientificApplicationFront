@@ -6,6 +6,7 @@ import { MyApplications } from '../../components/LK/MyApplications'
 import { Welcome } from '../../components/common/Welcome/Welcome'
 import { Token } from '../../Token'
 import { lkPageHof } from './lkPageHof'
+import { ApplicationSubmissions } from '../../components/LK/ApplicationSubmissions'
 import { ApplicationSubmission } from '../../components/LK/ApplicationSubmission'
 
 
@@ -20,7 +21,8 @@ const LkPage = () => {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/my-applications">
-          <Route path="details/:id" element={<ApplicationSubmission />} />
+          <Route path="details/:id/:applicationSubmissionId" element={<ApplicationSubmission />} />
+          <Route path="details/:id" element={<ApplicationSubmissions />} />
           <Route path=":page/:perPage" element={<MyApplications />} />
           <Route path="" element={<MyApplications />} />
         </Route>

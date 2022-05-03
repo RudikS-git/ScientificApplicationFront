@@ -12,24 +12,24 @@ axios.defaults.validateStatus = function (status) { // for the next handling err
 axios.interceptors.request.use(async (request) => {
 
     const token = Token.getInstance();
-    
+
     if (request?.headers && token?.content) {
 
-        if(!token.hasTokenExpired) {
+        if (!token.hasTokenExpired) {
             request.headers.Authorization = `Bearer ${Token.getInstance().content}`
         }
         else {
             try {
                 const { data } = await refreshToken();
 
-                if(data && data?.token) {
+                if (data && data?.token) {
                     token.content = data.token;
-                } 
+                }
             }
-            catch(error) {
+            catch (error) {
                 throw Error(String(error));
             }
-           
+
         }
     }
 
@@ -39,11 +39,11 @@ axios.interceptors.request.use(async (request) => {
 });
 
 axios.interceptors.response.use(response => {
-    
-    if(response.data.error) {
-        throw { 
-            error: response.data.error, 
-            validateErrors: response.data?.data 
+
+    if (response.data.error) {
+        throw {
+            error: response.data.error,
+            validateErrors: response.data?.data
         };
     }
 

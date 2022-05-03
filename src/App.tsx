@@ -17,6 +17,8 @@ import { refreshToken } from "./api/refreshToken";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './dayjs.config.ts'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const App: FC = observer(() => {
 
@@ -61,22 +63,24 @@ const App: FC = observer(() => {
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={baseTheme}>
-                <CssBaseline />
-                <BrowserRouter>
-                    <Pages />
-                </BrowserRouter>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                />
-                <ToastContainer />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <CssBaseline />
+                    <BrowserRouter>
+                        <Pages />
+                    </BrowserRouter>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+                    <ToastContainer />
+                </LocalizationProvider>
             </ThemeProvider>
         </StyledEngineProvider>
     );

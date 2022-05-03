@@ -34,3 +34,14 @@
         }
     }
 }
+
+.emptyText {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    margin-top: 25px;
+    align-items: center;
+    font-size: 1.2em;
+    color: var(--color-gray);
+}

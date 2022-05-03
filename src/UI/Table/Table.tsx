@@ -90,18 +90,24 @@ export const Table: FC<TableProps> = ({
                     </TableRow>
                 </TableHead>
 
-                <TableBody>
-                    {bodyRows?.map((row) => {
-                        return (
-                            <TableRow key={row.id}>
-                                {row.columns.map((column, index) => (
-                                    <TableCell key={index}>{column}</TableCell>
-                                ))}
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
+                {
+                    bodyRows &&
+                    <TableBody>
+                        {bodyRows?.map((row) => {
+                            return (
+                                <TableRow key={row.id}>
+                                    {row.columns.map((column, index) => (
+                                        <TableCell key={index}>{column}</TableCell>
+                                    ))}
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                }
+
             </MuiTable>
+
+            {(!bodyRows || bodyRows?.length == 0) && <div className={classes.emptyText}>В таблице отсутствуют записи</div>}
 
             {
                 count && (

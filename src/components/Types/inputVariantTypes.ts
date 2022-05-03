@@ -3,7 +3,7 @@ import { InputVariant } from "./Input";
 export interface BaseFieldType {
   groupId?: number,
   id?: number,
-  inputFieldId?: number,
+  inputFieldId: number,
   isRequired?: boolean,
   label?: string,
   description?: string,

@@ -24,8 +24,6 @@ export class CommonDictionary {
   getFieldTypes = async () => {
     const { data } = await axios.get('/api/field/types');
 
-    console.log(data);
-
     runInAction(() => {
       this.fieldTypes = data.fieldTypes
     })

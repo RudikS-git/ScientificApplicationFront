@@ -69,15 +69,15 @@ export const FieldTable = observer(({ groupName, groupId, fields }: FieldTablePr
         bodyRows={
           fields?.map((it, index) => {
             return {
-              id: it.id || index,
+              id: it.inputFieldId || index,
               columns: [
-                it.id,
+                it.inputFieldId,
                 it.isRequired ? "Да" : "Нет",
                 INPUT_TYPES[it.inputUnderTypeId],
                 it.label,
                 <div>
                   <Button onClick={() => _openInputModal(it)}>Изменить</Button>
-                  <Button onClick={() => _deleteInput(it.inputFieldId)}>Удалить</Button>
+                  <Button color="error" onClick={() => _deleteInput(it.inputFieldId)}>Удалить</Button>
                 </div>],
             }
           })

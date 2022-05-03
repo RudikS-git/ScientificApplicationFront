@@ -1,14 +1,14 @@
 import { VariantInputTypes } from "../../Types/inputVariantTypes"
 
 export interface Application {
-  id?: number,
+  id: number,
   name?: string,
   description?: string
-  applicationGroups?: ApplicationGroup[],
+  applicationGroups?: ApplicationGroupType[],
 }
 
-export interface ApplicationGroup {
-  id?: number,
+export interface ApplicationGroupType {
+  id: number,
   name?: string,
   inputFields?: VariantInputTypes[],
 }

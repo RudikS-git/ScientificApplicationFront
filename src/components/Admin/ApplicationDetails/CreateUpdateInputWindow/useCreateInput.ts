@@ -27,7 +27,7 @@ export const useCreateInput = ({ id, cancel }: UseCreateInputProps) => {
       label: applicationDetails.inputModalData?.label || '',
       description: applicationDetails.inputModalData?.description || '',
       inputUnderTypeId: applicationDetails.inputModalData?.inputUnderTypeId || InputVariant.TextField,
-      inputFieldId: applicationDetails.inputModalData?.inputFieldId,
+      inputFieldId: applicationDetails.inputModalData?.inputFieldId || 0,
     },
     onSubmit: () => _createUpdateInput(),
     enableReinitialize: true
@@ -86,13 +86,13 @@ export const useCreateInput = ({ id, cancel }: UseCreateInputProps) => {
       inputFieldId: formik.values.inputFieldId
     }
 
-
     switch (formik.values.inputUnderTypeId) {
       case InputVariant.TextField:
         inputModel.textField = {
           inputUnderTypeId: formik.values.inputUnderTypeId,
           minLength: formik.values.minLength,
           maxLength: formik.values.maxLength,
+          inputFieldId: formik.values.inputFieldId
         };
         break;
 
@@ -100,6 +100,7 @@ export const useCreateInput = ({ id, cancel }: UseCreateInputProps) => {
         inputModel.numberPhoneField = {
           inputUnderTypeId: formik.values.inputUnderTypeId,
           type: formik.values.type,
+          inputFieldId: formik.values.inputFieldId
         }
         break;
 
@@ -108,6 +109,7 @@ export const useCreateInput = ({ id, cancel }: UseCreateInputProps) => {
           inputUnderTypeId: formik.values.inputUnderTypeId,
           min: formik.values.min,
           max: formik.values.max,
+          inputFieldId: formik.values.inputFieldId
         }
         break;
 
@@ -116,6 +118,7 @@ export const useCreateInput = ({ id, cancel }: UseCreateInputProps) => {
           inputUnderTypeId: formik.values.inputUnderTypeId,
           minDateTime: formik.values.minDateTime,
           maxDateTime: formik.values.maxDateTime,
+          inputFieldId: formik.values.inputFieldId
         }
         break;
     }

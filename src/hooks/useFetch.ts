@@ -22,15 +22,14 @@ export const useFetch = (props?: Partial<UseFetchProps>) => {
 
         try {
             const result = await fetch();
-            console.log(result)
             setResponse(result.data);
 
             return result;
         }
-        catch(e: any) {
+        catch (e: any) {
 
-            if(withToast) {
-                if(e?.error?.message && withToast) {
+            if (withToast) {
+                if (e?.error?.message && withToast) {
                     toast(e.error.message, { type: 'error' });
                 }
                 else {
