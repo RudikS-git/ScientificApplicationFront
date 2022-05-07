@@ -1,0 +1,28 @@
+.root {
+  padding: 6px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  border-radius: 6px;
+  text-align: center;
+
+  &.blue {
+    background: var(--color-blue);
+  }
+
+  &.lightGray {
+    background: #ACACACF0;
+  }
+
+  &.red {
+    background: #D9401CA3;
+  }
+
+  &.green {
+    background: #59d206de;
+  }
+
+  &.gray {
+    background: var(--color-gray)
+  }
+}

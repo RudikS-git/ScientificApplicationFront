@@ -8,7 +8,9 @@ import { useFetch } from "../../../hooks/useFetch";
 import { useLKStores, useRootStore } from "../../../store/RootStore";
 import { Button } from "../../../UI/Button/Button";
 import { Table } from "../../../UI/Table/Table";
-import { ApplicationCard } from "../ApplicationCard";
+import { ApplicationCard } from "../../common/ApplicationCard";
+import { ApplicationCards } from "../../common/ApplicationCards";
+import { PageHeader } from "../../common/PageHeader";
 import classes from './MyApplications.module.scss';
 
 export const MyApplications: FC = observer(() => {
@@ -27,20 +29,14 @@ export const MyApplications: FC = observer(() => {
     return (
         <WithLoader isLoading={isLoading}>
             <div>
-                <h1 className={classes.header}>Мои заявки</h1>
-                <Divider />
+                <PageHeader>
+                    Мои заявки
+                </PageHeader>
 
-                <div className={classes.cards}>
-                    {
-                        pagedApplications?.items?.map(it => {
-                            return (
-                                <Link key={it?.id} to={`/my-applications/details/${it?.id}`}>
-                                    <ApplicationCard {...it} />
-                                </Link>
-                            )
-                        })
-                    }
-                </div>
+                <ApplicationCards
+                    linkToWithoutId="/my-applications/details"
+                    pagedApplications={pagedApplications}
+                />
             </div>
         </WithLoader>
     );

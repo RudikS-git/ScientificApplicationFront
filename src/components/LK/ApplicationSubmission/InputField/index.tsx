@@ -7,16 +7,18 @@ import classes from './InputField.module.scss';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { InputSubmission } from '../../../Types/ApplicationSubmission';
+import dayjs from 'dayjs';
 
 interface InputFieldProps {
   variantInput: VariantInputTypes,
   value: number | string | undefined,
-  onChange(value: number | string | undefined): void
+  onChange(value: number | string | undefined): void,
+  disabled?: boolean
 }
 
 export const InputField = (props: InputFieldProps) => {
 
-  const { variantInput, value, onChange } = props;
+  const { variantInput, value, onChange, disabled } = props;
 
   const renderByInputType = (inputUnderTypeId: number) => {
     switch (inputUnderTypeId) {
@@ -26,6 +28,7 @@ export const InputField = (props: InputFieldProps) => {
             label={variantInput?.label}
             value={value}
             onChange={(e) => onChange(e.target.value)}
+            disabled={disabled}
           >
 
           </TextField>
@@ -36,9 +39,10 @@ export const InputField = (props: InputFieldProps) => {
           <DesktopDatePicker
             label={variantInput?.label}
             inputFormat="MM/dd/yyyy"
-            value={value}
-            onChange={(date) => onChange(date || '')}
+            value={dayjs(value).format('YYYY-MM-DD')}
+            onChange={(date) => onChange(dayjs(date).format('YYYY-MM-DD') || '')}
             renderInput={(params) => <TextField {...params} />}
+            disabled={disabled}
           />
 
         )
@@ -54,6 +58,7 @@ export const InputField = (props: InputFieldProps) => {
               }
             }}
             onChange={(e) => onChange(e.target.value)}
+            disabled={disabled}
           >
 
           </TextField>
@@ -68,6 +73,7 @@ export const InputField = (props: InputFieldProps) => {
             label={variantInput?.label}
             value={''}
             onChange={(number) => onChange(number)}
+            disabled={disabled}
             inputComponent={(props) => {
               return (
                 <TextField {...props} />

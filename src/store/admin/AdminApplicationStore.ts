@@ -5,10 +5,12 @@ import { Application, ManageApplicationStates } from "../../components/Admin/Typ
 import { InputModel } from "./models/InputModel";
 import { PagedItems } from "../../Models/PagedItems";
 import { rootStore } from "../RootStore";
+import { ApplicationSubmissionType } from "../../components/Types/ApplicationSubmission";
 
 export class AdminApplicationStore {
 
     pagedApplications?: PagedItems<Application>;
+    pagedSubmissionApplications?: PagedItems<ApplicationSubmissionType>;
 
     constructor() {
         // do nothing

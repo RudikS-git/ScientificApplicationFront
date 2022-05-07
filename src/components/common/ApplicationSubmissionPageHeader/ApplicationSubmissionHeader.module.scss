@@ -1,0 +1,15 @@
+.appHeader {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.appState {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  
+  font-size: 0.8rem;
+}

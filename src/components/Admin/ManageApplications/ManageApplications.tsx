@@ -11,10 +11,11 @@ import { useModal } from '../../../hooks/useModal';
 import { useAdminStores, useRootStore } from '../../../store/RootStore';
 import { Button } from '../../../UI/Button/Button';
 import Loader from '../../../UI/Loader/Loader';
+import { Mark } from '../../../UI/Mark/Mark';
 import { Table } from '../../../UI/Table/Table';
 import { CreateApplicationModal } from '../CreateApplicationModal/CreateApplicationModal';
 import { Toolbar } from '../Toolbar/Toolbar';
-import { Application } from '../Types/Application';
+import { Application, ManageApplicationStates } from '../Types/Application';
 import classes from './ManageApplications.module.scss';
 import { useApplication } from './useApplication';
 
@@ -57,6 +58,17 @@ const ManageApplications = () => {
     startFetch(() => getApplications(page, pageSize))
   }
 
+  const renderApplicationState = (state: ManageApplicationStates) => {
+    switch (state) {
+      case ManageApplicationStates.Draft:
+        return <Mark text={MANAGE_APPLICATION_STATES[state]} variant="gray" />
+
+      case ManageApplicationStates.Published:
+        return <Mark text={MANAGE_APPLICATION_STATES[state]} variant="green" />
+
+    }
+  }
+
   return (
     <div className={classes.root}>
 
@@ -88,7 +100,7 @@ const ManageApplications = () => {
                   dayjs(it.created).format('DD.MM.YYYY'),
                   it.name,
                   `RN-${it.id}`,
-                  MANAGE_APPLICATION_STATES[it.manageApplicationState],
+                  renderApplicationState(it.manageApplicationState),
 
                   <div className={classes.manageBlock}>
                     <Button onClick={() => navigate(`/admin/applications/details/${it.id}`)}>Подробнее</Button>

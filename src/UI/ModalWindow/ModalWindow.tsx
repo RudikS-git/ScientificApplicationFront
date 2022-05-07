@@ -19,7 +19,7 @@ export const ModalWindow = (props: ModalProps) => {
             {...props}
         >
             <Fade in={props?.open}>
-                <div className={classes.root }>
+                <div className={classes.root}>
                     {props?.children}
                 </div>
             </Fade>

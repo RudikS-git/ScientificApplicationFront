@@ -11,7 +11,6 @@ export const useApplicationSubmission = () => {
   const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications, updateApplicationSubmission }, applicationSubmissionStore } = useLKStores();
   const { id: applicationId, applicationGroups } = applicationSubmissionStore?.application || {};
   const { id, name, applicationState, inputSubmissions } = applicationSubmissionStore?.applicationSubmission || {}
-  const [tab, setTab] = useState<string>('0');
   const { startFetch, isLoading } = useFetch();
 
   const formik = useFormik<Omit<ApplicationSubmissionType, 'id' | 'applicationId' | 'created' | 'applicationState'>>({
@@ -66,8 +65,6 @@ export const useApplicationSubmission = () => {
   }, [applicationGroups, inputSubmissions])
 
   return {
-    tab,
-    setTab,
     formik,
     isLoading
   }

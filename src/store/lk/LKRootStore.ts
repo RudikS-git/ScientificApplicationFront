@@ -1,6 +1,6 @@
 import { configure } from "mobx";
 import React from "react";
-import { ApplicationSubmissionStore } from "../../components/LK/ApplicationSubmissions/_store/ApplicationStore";
+import { ApplicationSubmissionStore } from "../../components/Moderator/_store/ApplicationSubmissionStore";
 import { StoresContext, useRootStore } from "../RootStore";
 import { ApplicationStore } from "./ApplicationStore";
 

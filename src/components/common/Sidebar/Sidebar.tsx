@@ -13,6 +13,12 @@ import { useLocation } from "react-router";
 
 const StyledAppBar = styled(AppBar)({ ...appBarStyles });
 
+const LINKS = {
+    myApplications: '/my-applications',
+    moderate: '/moderator/applications',
+    admin: '/admin/applications'
+}
+
 const Sidebar = () => {
 
     const location = useLocation();
@@ -21,8 +27,8 @@ const Sidebar = () => {
         <StyledSidebar>
             <StyledAppBar position="static">
                 <List>
-                    <ListItem className={classNames({ [classes.item]: true, [classes.active]: location.pathname.includes('/my-applications') })}>
-                        <Link to={"/my-applications"}>
+                    <ListItem className={classNames({ [classes.item]: true, [classes.active]: location.pathname.includes(LINKS.myApplications) })}>
+                        <Link to={LINKS.myApplications}>
                             <Button
                                 startIcon={<TopicIcon />}
                                 fullWidth
@@ -32,8 +38,8 @@ const Sidebar = () => {
                         </Link>
                     </ListItem>
 
-                    <ListItem className={classNames({ [classes.item]: true, [classes.active]: location.pathname.includes('/admin/moderate') })}>
-                        <Link to={"/admin/moderate"}>
+                    <ListItem className={classNames({ [classes.item]: true, [classes.active]: location.pathname.includes(LINKS.moderate) })}>
+                        <Link to={LINKS.moderate}>
                             <Button
                                 startIcon={<ManageAccountsIcon />}
                                 fullWidth
@@ -43,8 +49,8 @@ const Sidebar = () => {
                         </Link>
                     </ListItem>
 
-                    <ListItem className={classNames({ [classes.item]: true, [classes.active]: location.pathname.includes('/admin/applications') })}>
-                        <Link to={"/admin/applications"}>
+                    <ListItem className={classNames({ [classes.item]: true, [classes.active]: location.pathname.includes(LINKS.admin) })}>
+                        <Link to={LINKS.admin}>
                             <Button
                                 startIcon={<SettingsIcon />}
                                 fullWidth

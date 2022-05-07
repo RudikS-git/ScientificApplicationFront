@@ -34,9 +34,6 @@ export const useApplicationSubmission = ({ applicationId, submitHandler }: UseAp
         name: validateErrors.name?.length != 0 && validateErrors?.name[0],
       });
     }
-    else if (data) {
-      console.log(data)
-    }
 
     submitHandler(result);
   }

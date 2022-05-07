@@ -7,6 +7,7 @@ import CommonContainer from '../../components/common/CommonContainer/CommonConta
 export const AdminPage = () => {
 
   return (
+
     <CommonContainer>
       <Routes>
         <Route path="/applications">
@@ -15,6 +16,6 @@ export const AdminPage = () => {
           <Route path="" element={<ManageApplications />} />
         </Route>
       </Routes>
-    </CommonContainer>
+    </CommonContainer >
   )
 }

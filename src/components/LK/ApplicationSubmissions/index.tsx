@@ -8,12 +8,16 @@ import { useFetch } from '../../../hooks/useFetch';
 import { useModal } from '../../../hooks/useModal';
 import { useLKStores } from '../../../store/RootStore';
 import { Button } from '../../../UI/Button/Button';
+import { Mark } from '../../../UI/Mark/Mark';
 import { Table } from '../../../UI/Table/Table';
-import { ApplicationSubmissionType } from '../../Types/ApplicationSubmission';
-import { BackBtn } from '../BackButton';
+import { ApplicationSubmissionTable } from '../../common/ApplicationSubmissionTable';
+import { ApplicationSubmissionState, ApplicationSubmissionStateEnum, ApplicationSubmissionType } from '../../Types/ApplicationSubmission';
+import { BackBtn } from '../../common/BackButton';
 import classes from './ApplicationSubmission.module.scss';
 import { CreateApplicationSubmissionModal } from './CreateApplicationSubmissionModal';
 import { useApplicationSubmission } from './useApplicationSubmission';
+import AddIcon from '@mui/icons-material/Add';
+import { PageHeader } from '../../common/PageHeader';
 
 export const ApplicationSubmissions = observer(() => {
 
@@ -58,14 +62,16 @@ export const ApplicationSubmissions = observer(() => {
   return (
     <WithLoader isLoading={isLoading}>
       <div>
-        <h1 className={classes.header}>{name}</h1>
-        <Divider />
+        <PageHeader>
+          {name}
+        </PageHeader>
 
         <Box className={classes.btnGroup}>
           <BackBtn />
           <Button
             variant="contained"
             onClick={open}
+            endIcon={<AddIcon />}
           >
             Новая заявка
           </Button>
@@ -78,48 +84,15 @@ export const ApplicationSubmissions = observer(() => {
 
         <Divider />
 
-        <Table
-          headerRow={{
-            id: 1,
-            columns: [
-              "ID",
-              "Дата",
-              "Наименованиие",
-              "Рег.номер",
-              "Статус",
-              "",
-            ],
-          }}
-          bodyRows={
-            pagedSubmissionApplications?.items?.map((it: ApplicationSubmissionType) => {
-              return {
-                id: it.id,
-                columns: [
-                  it.id?.toString(),
-                  dayjs(it.created).format('DD.MM.YYYY'),
-                  it.name,
-                  `RN-${it.id}`,
-                  it.applicationState.name,
-
-                  <div className={classes.manageBlock}>
-                    <Button onClick={() => navigate(`/my-applications/details/${id}/${it.id}`)}>Подробнее</Button>
-                    <Button>История</Button>
-                    <Button color="error" onClick={() => _deleteApplicationSubmission(it.id)}>Удалить</Button>
-                  </div>
-                ],
-              }
-            })
-
+        <ApplicationSubmissionTable
+          pagedApplicationSubmissions={pagedSubmissionApplications}
+          renderActionNode={(it) =>
+            <>
+              <Button onClick={() => navigate(`/my-applications/details/${id}/${it.id}`)}>Подробнее</Button>
+              <Button>История</Button>
+              <Button color="error" onClick={() => _deleteApplicationSubmission(it.id)}>Удалить</Button>
+            </>
           }
-
-        // pagination={{
-        //   perPages: perPages,
-        //   page: Number(page) || 1,
-        //   perPage: Number(perPage) || 15,
-        //   count: pagedApplications?.totalCount,
-        //   changePageHandler: (newPage: number, perPage: number) => navigate(`/admin/applications/${newPage}/${perPage}`),
-        //   changeRowsPerPageHandler: (perPage: number) => navigate(`/admin/applications/1/${perPage}`)
-        // }}
         />
 
         <CreateApplicationSubmissionModal

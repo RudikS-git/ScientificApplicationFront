@@ -44,7 +44,6 @@ export const useApplication = ({ submitHandler }: useApplicationProps) => {
         if (id) {
             const { error } = await startFetch(() => deleteApplicationById(id));
 
-            console.log(error)
             if (!error) {
                 toast("Вы успешно удалили заявку", { type: 'error' })
             }

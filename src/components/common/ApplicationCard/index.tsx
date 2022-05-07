@@ -1,5 +1,5 @@
 import React from 'react'
-import { Application } from '../types/Application';
+import { Application } from '../../LK/types/Application';
 import classes from './ApplicationCard.module.scss';
 
 export const ApplicationCard = (application: Application) => {

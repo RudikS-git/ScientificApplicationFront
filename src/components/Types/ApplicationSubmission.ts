@@ -7,8 +7,16 @@ export interface ApplicationSubmissionType {
 }
 
 export interface ApplicationSubmissionState {
-  id: number,
+  id: ApplicationSubmissionStateEnum,
   name: string
+}
+
+export enum ApplicationSubmissionStateEnum {
+  Draft = 1,
+  Checked,
+  Rejected,
+  Modification,
+  Accepted
 }
 
 export interface InputSubmission {

@@ -1,0 +1,23 @@
+.root {
+  
+}
+
+.content {
+
+  & > * {
+    padding: 0;
+  }
+}
+
+.headerBtnGroup {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-end;
+  background-color: aliceblue;
+  padding: 8px;
+  padding: 8px 24px;
+
+  &>:nth-child(1) {
+    margin-right: auto;
+  }
+}

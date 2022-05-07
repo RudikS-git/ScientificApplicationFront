@@ -5,6 +5,7 @@ import { Application } from "../../components/LK/types/Application";
 import { ApplicationSubmissionType } from "../../components/Types/ApplicationSubmission";
 import { PagedItems } from "../../Models/PagedItems";
 import { rootStore } from "../RootStore";
+import { HistorySubmission } from "../_types/HistorySubmission";
 import { LKRootStore } from "./LKRootStore";
 
 export class ApplicationStore {
@@ -12,6 +13,7 @@ export class ApplicationStore {
     lkRootStore: LKRootStore;
     pagedApplications?: PagedItems<Application>;
     pagedSubmissionApplications?: PagedItems<ApplicationSubmissionType>
+    // historySubmissions?: PagedItems<HistorySubmission>
 
     constructor(lkRootStore: LKRootStore) {
         this.lkRootStore = lkRootStore;
@@ -67,4 +69,27 @@ export class ApplicationStore {
         return axios.delete(`/api/application-submission/${id}`);
     }
 
+    sendApplicationForVerification = (id: number) => {
+        return axios.patch(`/api/application-submission/send/${id}`);
+    }
+
+    // gitHistorySubmissions = async (aplicationSubmissionId: number, page = 1, pageSize = 15) => {
+    //     try {
+    //         const { data } = await axios.get(`/api/history-submission/${aplicationSubmissionId}/${page}/${pageSize}`);
+
+    //         runInAction(() => {
+    //             this.historySubmissions = data;
+    //         })
+
+    //         return data;
+    //     }
+    //     catch (e: unknown) {
+
+    //         runInAction(() => {
+    //             this.historySubmissions = undefined;
+    //         })
+
+    //         throw e;
+    //     }
+    // }
 }

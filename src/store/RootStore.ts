@@ -4,11 +4,13 @@ import { AdminRootStore } from "./admin/AdminRootStore";
 import { AuthStore } from "./AuthStore";
 import { LKRootStore } from "./lk/LKRootStore";
 import { TypeAuth } from "./_types/TypeAuth";
+import { ModeratorRootStore } from "./moderator/ModeratorRootStore";
 
 export class RootStore {
 
     private _lkStore: LKRootStore;
     private _adminStore: AdminRootStore;
+    private _moderatorStore: ModeratorRootStore;
     private _authStore: AuthStore;
     private _commonDictionary: CommonDictionary;
 
@@ -17,6 +19,7 @@ export class RootStore {
         this._adminStore = new AdminRootStore();
         this._lkStore = new LKRootStore();
         this._commonDictionary = new CommonDictionary();
+        this._moderatorStore = new ModeratorRootStore();
     }
 
     set authStore(authStore: AuthStore) {
@@ -49,6 +52,13 @@ export class RootStore {
     get commonDictionary() {
         return this._commonDictionary;
     }
+
+    get moderatorStore() {
+        return this._moderatorStore;
+    }
+    set moderatorStore(moderatorStore: ModeratorRootStore) {
+        this._moderatorStore = moderatorStore;
+    }
 }
 
 export const rootStore = new RootStore();
@@ -66,4 +76,9 @@ export const useLKStores = () => {
 export const useAdminStores = () => {
     const rootStore = useRootStore();
     return rootStore.adminStore;
+}
+
+export const useModeratorStores = () => {
+    const rootStore = useRootStore();
+    return rootStore.moderatorStore;
 }

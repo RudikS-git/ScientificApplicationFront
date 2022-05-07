@@ -1,0 +1,11 @@
+.btnGroup { 
+  background: aliceblue;
+  display: flex; 
+  justify-content: flex-end;
+  padding: 8px 16px;
+  gap: 8px;
+
+  &>:nth-child(1) {
+    margin-right: auto;
+  }
+}

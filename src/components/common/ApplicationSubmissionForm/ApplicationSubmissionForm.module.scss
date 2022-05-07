@@ -1,0 +1,17 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 32px;
+  padding-bottom: 32px;
+}
+
+.tabs {
+  width: 100%;
+  margin-bottom: 24px;
+  margin-top: 12px;
+}
+
+.serviceFields {
+  margin-top: 24px;
+}

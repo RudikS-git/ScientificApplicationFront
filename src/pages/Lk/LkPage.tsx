@@ -9,7 +9,6 @@ import { lkPageHof } from './lkPageHof'
 import { ApplicationSubmissions } from '../../components/LK/ApplicationSubmissions'
 import { ApplicationSubmission } from '../../components/LK/ApplicationSubmission'
 
-
 const LkPage = () => {
 
   // useEffect(() => {
