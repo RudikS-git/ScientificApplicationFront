@@ -23,7 +23,7 @@ export const Login = () => {
     onSubmit: () => submit()
   });
 
-  const { startFetch, isLoading } = useFetch();
+  const { startFetch } = useFetch();
 
   const submit = async () => {
     const { error, validateErrors } = await startFetch(() => login(formik.values));
@@ -35,7 +35,7 @@ export const Login = () => {
       });
     }
     else {
-      navigate('/lk')
+      navigate('/')
     }
   }
 
@@ -76,8 +76,6 @@ export const Login = () => {
             Войти
           </Button>
         </Box>
-
-
       </div>
     </div>
   )

@@ -3,11 +3,11 @@ import { Route, Routes } from 'react-router-dom'
 import ManageApplications from '../../components/Admin/ManageApplications/ManageApplications'
 import { ApplicationDetails } from '../../components/Admin/ApplicationDetails/ApplicationDetails'
 import CommonContainer from '../../components/common/CommonContainer/CommonContainer'
+import { authPageHof } from '../Auth/authPageHof'
 
-export const AdminPage = () => {
+const AdminPage = () => {
 
   return (
-
     <CommonContainer>
       <Routes>
         <Route path="/applications">
@@ -19,3 +19,5 @@ export const AdminPage = () => {
     </CommonContainer >
   )
 }
+
+export default authPageHof(AdminPage)

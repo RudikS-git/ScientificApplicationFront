@@ -15,13 +15,7 @@ export const AccountHeader = observer(() => {
 	const open = Boolean(anchorEl);
 
 	const logoutHandler = async () => {
-		try {
-			await logout();
-			navigator('/auth/login');
-		}
-		catch {
-			// do nothing
-		}
+		await logout();
 	}
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {

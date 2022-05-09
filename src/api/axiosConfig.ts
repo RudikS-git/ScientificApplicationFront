@@ -29,7 +29,6 @@ axios.interceptors.request.use(async (request) => {
             catch (error) {
                 throw Error(String(error));
             }
-
         }
     }
 
@@ -38,7 +37,27 @@ axios.interceptors.request.use(async (request) => {
     return Promise.reject(error);
 });
 
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use(async (response) => {
+
+    if (response.status === 401) {
+        const token = Token.getInstance();
+
+        if (token?.content) {
+            try {
+                const { data } = await refreshToken();
+
+                if (data && data?.token) {
+                    token.content = data.token;
+                }
+                else {
+                    window.location.href = "/auth/login"
+                }
+            }
+            catch (error) {
+                throw Error(String(error));
+            }
+        }
+    }
 
     if (response.data.error) {
         throw {

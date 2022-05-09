@@ -5,21 +5,23 @@ import CommonContainer from '../../components/common/CommonContainer/CommonConta
 import { MyApplications } from '../../components/LK/MyApplications'
 import { Welcome } from '../../components/common/Welcome/Welcome'
 import { Token } from '../../Token'
-import { lkPageHof } from './lkPageHof'
 import { ApplicationSubmissions } from '../../components/LK/ApplicationSubmissions'
 import { ApplicationSubmission } from '../../components/LK/ApplicationSubmission'
+import { HistorySubmissions } from '../../components/LK/HistorySubmissions'
+import { authPageHof } from '../Auth/authPageHof'
 
 const LkPage = () => {
-
-  // useEffect(() => {
-
-  // }, [])
 
   return (
     <CommonContainer>
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/my-applications">
+          <Route path="history-submission/:id/:applicationSubmissionId">
+            <Route path=":page/:perPage" element={<HistorySubmissions />} />
+            <Route path="" element={<HistorySubmissions />} />
+          </Route>
+
           <Route path="details/:id/:applicationSubmissionId" element={<ApplicationSubmission />} />
           <Route path="details/:id" element={<ApplicationSubmissions />} />
           <Route path=":page/:perPage" element={<MyApplications />} />
@@ -30,4 +32,4 @@ const LkPage = () => {
   )
 }
 
-export default lkPageHof(LkPage);
+export default authPageHof(LkPage);

@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import AddIcon from '@mui/icons-material/Add';
 import { useFormik } from 'formik';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react'
@@ -13,8 +14,9 @@ import { Button } from '../../../UI/Button/Button';
 import Loader from '../../../UI/Loader/Loader';
 import { Mark } from '../../../UI/Mark/Mark';
 import { Table } from '../../../UI/Table/Table';
+import { PageHeader } from '../../common/PageHeader';
+import { ToolBar } from '../../common/ToolBar';
 import { CreateApplicationModal } from '../CreateApplicationModal/CreateApplicationModal';
-import { Toolbar } from '../Toolbar/Toolbar';
 import { Application, ManageApplicationStates } from '../Types/Application';
 import classes from './ManageApplications.module.scss';
 import { useApplication } from './useApplication';
@@ -71,12 +73,26 @@ const ManageApplications = () => {
 
   return (
     <div className={classes.root}>
+      <PageHeader>
+        Конструктор заявок
+      </PageHeader>
 
-      <div>
-        <Toolbar
-          createHandler={open}
-        />
-      </div>
+      <ToolBar
+        withBackBtn={false}
+      >
+        <Button
+          variant='contained'
+          onClick={open}
+          endIcon={<AddIcon />}
+        >
+          Создать заявку
+        </Button>
+        <Button
+          variant="outlined"
+        >
+          Фильтрация
+        </Button>
+      </ToolBar>
 
       <WithLoader isLoading={isLoading}>
         <Table

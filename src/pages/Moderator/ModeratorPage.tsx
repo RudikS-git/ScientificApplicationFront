@@ -7,15 +7,16 @@ import { ApplicationSubmission } from '../../components/Moderator/ApplicationSub
 import { ApplicationSubmissions } from '../../components/Moderator/ApplicationSubmissions'
 import { Applications } from '../../components/Moderator/Applications'
 import { HistorySubmissions } from '../../components/Moderator/HistorySubmissions'
+import { authPageHof } from '../Auth/authPageHof'
 
-export const ModeratorPage = () => {
+const ModeratorPage = () => {
 
   return (
     <CommonContainer>
       <Routes>
         <Route path="/">
           <Route path="/applications">
-            <Route path="details/:id/:applicationSubmissionId/history-submission">
+            <Route path="history-submission/:id/:applicationSubmissionId">
               <Route path=":page/:perPage" element={<HistorySubmissions />} />
               <Route path="" element={<HistorySubmissions />} />
             </Route>
@@ -30,3 +31,5 @@ export const ModeratorPage = () => {
     </CommonContainer>
   )
 }
+
+export default authPageHof(ModeratorPage)

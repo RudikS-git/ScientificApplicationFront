@@ -1,5 +1,5 @@
 import axios from "axios";
-import { configure, runInAction } from "mobx";
+import { configure, makeAutoObservable, runInAction } from "mobx";
 import React from "react";
 import { Application } from "../../components/LK/types/Application";
 import { ApplicationSubmissionState, ApplicationSubmissionStateEnum, ApplicationSubmissionType } from "../../components/Types/ApplicationSubmission";
@@ -11,11 +11,11 @@ export class ModeratorApplicationStore {
 
   pagedApplications?: PagedItems<Application>;
   pagedSubmissionApplications?: PagedItems<ApplicationSubmissionType>;
-  applicationStates?: ApplicationSubmissionState[]
-  historySubmissions?: PagedItems<HistorySubmission>
+  applicationStates?: ApplicationSubmissionState[];
+  historySubmissions?: PagedItems<HistorySubmission>;
 
   constructor() {
-    // do nothing
+    makeAutoObservable(this);
   }
 
   getApplications = async (page = 1, pageSize = 15) => {

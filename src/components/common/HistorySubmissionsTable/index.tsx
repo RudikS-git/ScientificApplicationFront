@@ -16,7 +16,8 @@ interface HistorySubmissionsProps {
   perPages: number[]
 }
 
-export const HistorySubmissionsTable = ({ pagedHistorySubmissions, page, perPage, changePageHandler, changeRowsPerPageHandler, perPages }: HistorySubmissionsProps) => {
+export const HistorySubmissionsTable = (props: HistorySubmissionsProps) => {
+  const { pagedHistorySubmissions, page, perPage, changePageHandler, changeRowsPerPageHandler, perPages } = props || {};
 
   return (
     <Table

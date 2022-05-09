@@ -89,7 +89,7 @@ export const ApplicationSubmissions = observer(() => {
           renderActionNode={(it) =>
             <>
               <Button onClick={() => navigate(`/my-applications/details/${id}/${it.id}`)}>Подробнее</Button>
-              <Button>История</Button>
+              <Button onClick={() => navigate(`/my-applications/history-submission/${id}/${it.id}`)}>История</Button>
               <Button color="error" onClick={() => _deleteApplicationSubmission(it.id)}>Удалить</Button>
             </>
           }

@@ -38,9 +38,10 @@ export const InputField = (props: InputFieldProps) => {
         return (
           <DesktopDatePicker
             label={variantInput?.label}
-            inputFormat="MM/dd/yyyy"
-            value={dayjs(value).format('YYYY-MM-DD')}
-            onChange={(date) => onChange(dayjs(date).format('YYYY-MM-DD') || '')}
+            inputFormat="DD.MM.YYYY"
+            mask='__.__.____'
+            value={dayjs(value).format('DD.MM.YYYY')}
+            onChange={(date) => onChange(dayjs(date).format('DD.MM.YYYY') || '')}
             renderInput={(params) => <TextField {...params} />}
             disabled={disabled}
           />

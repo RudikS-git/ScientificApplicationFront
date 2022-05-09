@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useModeratorStores } from '../../../store/RootStore';
+import { useLKStores, useModeratorStores } from '../../../store/RootStore';
 import { HistorySubmissionsTable } from '../../common/HistorySubmissionsTable';
 import { PageHeader } from '../../common/PageHeader';
 import { ToolBar } from '../../common/ToolBar';
 
 export const HistorySubmissions = observer(() => {
 
-  const { applicationStore: { pagedSubmissionApplications, historySubmissions, gitHistorySubmissions } } = useModeratorStores();
+  const { applicationStore: { pagedSubmissionApplications, historySubmissions, gitHistorySubmissions } } = useLKStores();
   const perPages = [10, 15, 20, 25]
   const navigate = useNavigate();
   const { id, applicationSubmissionId, page, perPage } = useParams();
@@ -19,7 +19,7 @@ export const HistorySubmissions = observer(() => {
         gitHistorySubmissions(Number(applicationSubmissionId), Number(page), Number(perPage))
       }
       else {
-        navigate(`/moderator/applications/details/${id}`)
+        navigate(`/my-applications/details/${id}`)
       }
     }
     else {
@@ -31,7 +31,7 @@ export const HistorySubmissions = observer(() => {
   return (
     <div>
       <PageHeader>
-        Модерация - История заявки № {applicationSubmissionId}
+        История заявки № {applicationSubmissionId}
       </PageHeader>
 
       <ToolBar>
@@ -41,11 +41,11 @@ export const HistorySubmissions = observer(() => {
         pagedHistorySubmissions={historySubmissions}
 
         changePageHandler={function (newPage: number, perPage: number): void {
-          navigate(`/moderator/applications/history-submission/${id}/${applicationSubmissionId}/${newPage}/${perPage}`)
+          navigate(`/my-applications/history-submission/${id}/${applicationSubmissionId}/${newPage}/${perPage}`)
         }}
 
         changeRowsPerPageHandler={function (perPage: number): void {
-          navigate(`/moderator/applications/history-submission/${id}/${applicationSubmissionId}/1/${perPage}`)
+          navigate(`/my-applications/history-submission/${id}/${applicationSubmissionId}/1/${perPage}`)
         }}
 
         page={Number(page)}

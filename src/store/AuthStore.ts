@@ -14,7 +14,7 @@ export class AuthStore {
     email?: string;
     birthDate?: Date;
 
-    constructor(rootStore : RootStore) {
+    constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
         makeAutoObservable(this);
     }
@@ -35,23 +35,22 @@ export class AuthStore {
     }
 
     login = async (loginModel: LoginModel) => {
-        const promise = axios.post('/api/user/login', loginModel)
-            .then(async result => {
-                Token.getInstance().content = result?.data.accessToken;
-            
-                runInAction(() => {
-                    this.typeAuth = TypeAuth.Auth;
-                })
-                await this.getUserInfo();
-            })
+        const result = await axios.post('/api/user/login', loginModel);
 
-        return promise;
+        runInAction(() => {
+            Token.getInstance().content = result?.data.accessToken;
+        })
+
+        await this.getUserInfo();
+
+        return result;
     }
 
     logout = async () => {
         const result = await axios.put('/api/user/revoke-refresh-token');
         runInAction(() => {
             this.typeAuth = TypeAuth.NoAuth;
+            Token.getInstance().content = undefined;
         })
 
         return result;

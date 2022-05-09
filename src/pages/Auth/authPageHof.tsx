@@ -5,12 +5,13 @@ import { Navigate } from 'react-router-dom';
 import { useRootStore } from '../../store/RootStore';
 import { TypeAuth } from '../../store/_types/TypeAuth';
 
-export const lkPageHof = (Component : React.ComponentType) => {
+export const authPageHof = (Component: React.ComponentType) => {
     return observer(() => {
-        const { authStore: { typeAuth }} = useRootStore();
+        const { authStore: { typeAuth } } = useRootStore();
+        const navigate = useNavigate();
 
-        if(typeAuth === TypeAuth.Loading || typeAuth === TypeAuth.NoAuth) {
-            return <Navigate to="/auth/login" />
+        if (typeAuth === TypeAuth.NoAuth) {
+            navigate("/auth/login");
         }
 
         return <Component />
