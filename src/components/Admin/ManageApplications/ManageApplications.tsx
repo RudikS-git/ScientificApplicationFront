@@ -87,22 +87,17 @@ const ManageApplications = () => {
         >
           Создать заявку
         </Button>
-        <Button
-          variant="outlined"
-        >
-          Фильтрация
-        </Button>
       </ToolBar>
 
       <WithLoader isLoading={isLoading}>
         <Table
+          className={classes.applicationTable}
           headerRow={{
             id: 1,
             columns: [
               "ID",
               "Дата",
               "Наименованиие",
-              "Рег.номер",
               "Статус",
               "",
             ],
@@ -115,7 +110,6 @@ const ManageApplications = () => {
                   it.id?.toString(),
                   dayjs(it.created).format('DD.MM.YYYY'),
                   it.name,
-                  `RN-${it.id}`,
                   renderApplicationState(it.manageApplicationState),
 
                   <div className={classes.manageBlock}>

@@ -1,7 +1,7 @@
 import { Box, Divider } from '@mui/material';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { WithLoader } from '../../../HOC/WithLoader';
 import { useFetch } from '../../../hooks/useFetch';
@@ -18,6 +18,7 @@ import { CreateApplicationSubmissionModal } from './CreateApplicationSubmissionM
 import { useApplicationSubmission } from './useApplicationSubmission';
 import AddIcon from '@mui/icons-material/Add';
 import { PageHeader } from '../../common/PageHeader';
+import { ApplicationFilter } from '../../common/ApplicationFilter';
 
 export const ApplicationSubmissions = observer(() => {
 
@@ -26,6 +27,7 @@ export const ApplicationSubmissions = observer(() => {
   const { name } = applicationSubmissionStore?.application || {};
   const { isOpen, open, close } = useModal();
   const navigate = useNavigate();
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const submitHandler = ({ data, error, validateErrors }: any) => {
     if (!error) {
@@ -77,12 +79,17 @@ export const ApplicationSubmissions = observer(() => {
           </Button>
           <Button
             variant="outlined"
+            onClick={() => setFilterOpen(!filterOpen)}
           >
             Фильтрация
           </Button>
         </Box>
 
         <Divider />
+
+        {
+          filterOpen && <ApplicationFilter />
+        }
 
         <ApplicationSubmissionTable
           pagedApplicationSubmissions={pagedSubmissionApplications}

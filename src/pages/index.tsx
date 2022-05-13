@@ -23,13 +23,13 @@ const Pages: FC = () => {
 
     return (
 
-        <TransitionGroup component={null}>
-            <CSSTransition
-                key={location.key}
-                classNames="fade"
-                timeout={400}
-            >
-                <Suspense fallback={<div />}>
+        <Suspense fallback={<div />}>
+            <TransitionGroup component={null}>
+                <CSSTransition
+                    key={location.key}
+                    classNames="fade"
+                    timeout={400}
+                >
                     <Routes location={location}>
                         <Route path="/auth/*" element={<AuthPage />} />
                         <Route path="/admin/*" element={<AdminPage />} />
@@ -37,10 +37,9 @@ const Pages: FC = () => {
                         <Route path="/*" element={<LkPage />} />
                         <Route path="*" element={<UnknownPage />} />
                     </Routes>
-                </Suspense>
-
-            </CSSTransition>
-        </TransitionGroup>
+                </CSSTransition>
+            </TransitionGroup>
+        </Suspense>
     );
 };
 

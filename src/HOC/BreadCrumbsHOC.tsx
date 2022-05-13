@@ -14,10 +14,8 @@ interface BreadCrumb {
 
 export const BreadCrumbsHOC: FC<BreadCrumbsHOCProps> = ({ links, children }) => {
 
-    console.log(links)
-    
     return (
-       <div>
+        <div>
             <Breadcrumbs>
                 {
                     links?.map(it => {
@@ -31,6 +29,6 @@ export const BreadCrumbsHOC: FC<BreadCrumbsHOCProps> = ({ links, children }) => 
             </Breadcrumbs>
 
             {children}
-       </div>
+        </div>
     )
 }

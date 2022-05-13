@@ -7,13 +7,13 @@ interface TextFieldProps extends Omit<MuiTextFieldProps, 'error'> {
     //mask?: string
 }
 
-export const TextField = (props: TextFieldProps) => {
-
+export const TextField = React.forwardRef((props: TextFieldProps, ref: React.Ref<any>) => {
     const { error, ...others } = props;
 
     return (
         <div className={classes.root}>
             <MuiTextField
+                inputRef={ref}
                 fullWidth
                 error={Boolean(error)}
                 {...others}
@@ -24,4 +24,5 @@ export const TextField = (props: TextFieldProps) => {
             }
         </div>
     )
-}
+});
+

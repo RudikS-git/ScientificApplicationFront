@@ -19,6 +19,7 @@ export const ApplicationSubmissionTable = (props: ApplicationSubmissionTableProp
 
   return (
     <Table
+      className={classes.submissionTable}
       headerRow={{
         id: 1,
         columns: [

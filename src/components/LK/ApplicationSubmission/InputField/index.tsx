@@ -1,18 +1,19 @@
 import { DatePicker, DesktopDatePicker } from '@mui/lab';
-import React from 'react'
+import React, { useRef } from 'react'
 import { TextField } from '../../../../UI/TextField/TextField'
 import { InputVariant } from '../../../Types/Input';
-import { VariantInputTypes } from '../../../Types/inputVariantTypes'
+import { DateFieldType, NumberFieldType, PhoneFieldType, TextFieldType, VariantInputTypes } from '../../../Types/inputVariantTypes'
 import classes from './InputField.module.scss';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { InputSubmission } from '../../../Types/ApplicationSubmission';
 import dayjs from 'dayjs';
+import { E164Number } from 'libphonenumber-js/types';
 
 interface InputFieldProps {
-  variantInput: VariantInputTypes,
-  value: number | string | undefined,
-  onChange(value: number | string | undefined): void,
+  variantInput: VariantInputTypes, //Omit<VariantInputTypes, 'NumberFieldType'>,
+  value: number | string | E164Number | undefined,
+  onChange(value: number | string | E164Number | undefined): void,
   disabled?: boolean
 }
 
@@ -26,12 +27,10 @@ export const InputField = (props: InputFieldProps) => {
         return (
           <TextField
             label={variantInput?.label}
-            value={value}
+            value={value || ''}
             onChange={(e) => onChange(e.target.value)}
             disabled={disabled}
-          >
-
-          </TextField>
+          />
         )
 
       case InputVariant.DateField:
@@ -40,8 +39,8 @@ export const InputField = (props: InputFieldProps) => {
             label={variantInput?.label}
             inputFormat="DD.MM.YYYY"
             mask='__.__.____'
-            value={dayjs(value).format('DD.MM.YYYY')}
-            onChange={(date) => onChange(dayjs(date).format('DD.MM.YYYY') || '')}
+            value={value as string}
+            onChange={(date) => onChange(date || '')}
             renderInput={(params) => <TextField {...params} />}
             disabled={disabled}
           />
@@ -52,7 +51,7 @@ export const InputField = (props: InputFieldProps) => {
         return (
           <TextField
             label={variantInput?.label}
-            value={value}
+            value={value || ''}
             onKeyPress={(event) => {
               if (!/[0-9]/.test(event.key)) {
                 event.preventDefault();
@@ -60,9 +59,7 @@ export const InputField = (props: InputFieldProps) => {
             }}
             onChange={(e) => onChange(e.target.value)}
             disabled={disabled}
-          >
-
-          </TextField>
+          />
         )
 
       case InputVariant.PhoneField:
@@ -72,14 +69,10 @@ export const InputField = (props: InputFieldProps) => {
             countryCallingCodeEditable={false}
             defaultCountry='RU'
             label={variantInput?.label}
-            value={''}
-            onChange={(number) => onChange(number)}
             disabled={disabled}
-            inputComponent={(props) => {
-              return (
-                <TextField {...props} />
-              )
-            }}
+            onChange={(number) => onChange(number)}
+            value={value as E164Number}
+            inputComponent={TextField}
           />
         )
     }

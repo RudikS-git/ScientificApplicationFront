@@ -41,7 +41,7 @@ export const ApplicationGroup = (props: ApplicationGroup) => {
 
           return (
             <InputField
-              key={it.id}
+              key={it.inputFieldId}
               variantInput={it}
               value={value}
               onChange={(value) => index != -1 && formik.setFieldValue(`inputSubmissions[${index}].value`, value)}
