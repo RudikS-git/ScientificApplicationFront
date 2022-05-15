@@ -1,12 +1,14 @@
 import axios from "axios";
 import { configure, runInAction } from "mobx";
 import React from "react";
+import { ApplicationFilterOptions } from "../../components/common/ApplicationFilter/useApplicationFilter";
 import { Application } from "../../components/LK/types/Application";
-import { ApplicationSubmissionType } from "../../components/Types/ApplicationSubmission";
+import { ApplicationSubmissionState, ApplicationSubmissionType } from "../../components/Types/ApplicationSubmission";
 import { PagedItems } from "../../Models/PagedItems";
 import { rootStore } from "../RootStore";
 import { HistorySubmission } from "../_types/HistorySubmission";
 import { LKRootStore } from "./LKRootStore";
+import queryString from 'query-string';
 
 export class ApplicationStore {
 
@@ -14,6 +16,7 @@ export class ApplicationStore {
     pagedApplications?: PagedItems<Application>;
     pagedSubmissionApplications?: PagedItems<ApplicationSubmissionType>
     historySubmissions?: PagedItems<HistorySubmission>
+    applicationStates?: ApplicationSubmissionState[];
 
     constructor(lkRootStore: LKRootStore) {
         this.lkRootStore = lkRootStore;
@@ -33,9 +36,19 @@ export class ApplicationStore {
         return axios.get(`/api/application/${id}`);
     }
 
-    getApplicationSubmissions = async (applicationId: number, page = 1, pageSize = 15) => {
+    getApplicationSubmissions = async (applicationId: number, page = 1, pageSize = 15, applicationFilterState: Partial<ApplicationFilterOptions> | undefined = undefined) => {
         try {
-            const { data } = await axios.get(`/api/application-submission/${applicationId}/${page}/${pageSize}`);
+            let url;
+
+            if (applicationFilterState) {
+                const query = queryString.stringify(applicationFilterState);
+                url = `/api/application-submission/${applicationId}/${page}/${pageSize}?${query}`
+            }
+            else {
+                url = `/api/application-submission/${applicationId}/${page}/${pageSize}`;
+            }
+
+            const { data } = await axios.get(url);
 
             runInAction(() => {
                 this.pagedSubmissionApplications = data;
@@ -87,6 +100,26 @@ export class ApplicationStore {
 
             runInAction(() => {
                 this.historySubmissions = undefined;
+            })
+
+            throw e;
+        }
+    }
+
+    getApplicationStates = async () => {
+        try {
+            const { data } = await axios.get(`/api/application/states`);
+
+            runInAction(() => {
+                this.applicationStates = data;
+            })
+
+            return data;
+        }
+        catch (e: unknown) {
+
+            runInAction(() => {
+                this.applicationStates = undefined;
             })
 
             throw e;

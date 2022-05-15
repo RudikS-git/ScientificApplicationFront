@@ -10,6 +10,7 @@ import { Token } from '../../../Token';
 import { useNavigate } from 'react-router';
 import { useFetch } from '../../../hooks/useFetch';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
 
@@ -72,9 +73,19 @@ export const Login = () => {
             variant='contained'
             onClick={formik.submitForm}
             disabled={formik.isSubmitting}
+            fullWidth
           >
             Войти
           </Button>
+
+          <Link to="/auth/registration">
+            <Button
+              variant='outlined'
+              fullWidth
+            >
+              Регистрация
+            </Button>
+          </Link>
         </Box>
       </div>
     </div>

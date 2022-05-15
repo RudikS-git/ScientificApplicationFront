@@ -110,7 +110,7 @@ export const Table: FC<TableProps> = ({
             {(!bodyRows || bodyRows?.length == 0) && <div className={classes.emptyText}>В таблице отсутствуют записи</div>}
 
             {
-                count && (
+                (bodyRows?.length != 0 && count) && (
                     <TablePagination
                         component="div"
                         count={count}

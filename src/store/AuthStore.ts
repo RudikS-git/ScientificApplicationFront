@@ -4,6 +4,7 @@ import { Token } from "../Token";
 import { LKRootStore } from "./lk/LKRootStore";
 import { RootStore } from "./RootStore";
 import { LoginModel } from "./_types/LoginModel";
+import { RegistrationModel } from "./_types/RegistrationModel";
 import { TypeAuth } from "./_types/TypeAuth";
 
 export class AuthStore {
@@ -44,6 +45,10 @@ export class AuthStore {
         await this.getUserInfo();
 
         return result;
+    }
+
+    register = (registrationModel: RegistrationModel) => {
+        return axios.post('/api/user/register', registrationModel);
     }
 
     logout = async () => {

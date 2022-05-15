@@ -6,6 +6,8 @@ import { ApplicationSubmissionState, ApplicationSubmissionStateEnum, Application
 import { ManageApplicationSubmission } from "../../components/Types/ManageApplicationSubmission";
 import { PagedItems } from "../../Models/PagedItems";
 import { HistorySubmission } from "../_types/HistorySubmission";
+import queryString from 'query-string';
+import { ApplicationFilterOptions } from "../../components/common/ApplicationFilter/useApplicationFilter";
 
 export class ModeratorApplicationStore {
 
@@ -39,9 +41,19 @@ export class ModeratorApplicationStore {
     return axios.get(`/api/moderator/application/${id}`);
   }
 
-  getApplicationSubmissions = async (applicationId: number, page = 1, pageSize = 15) => {
+  getApplicationSubmissions = async (applicationId: number, page = 1, pageSize = 15, applicationFilterState: Partial<ApplicationFilterOptions> | undefined = undefined) => {
     try {
-      const { data } = await axios.get(`/api/moderator/application-submission/${applicationId}/${page}/${pageSize}`);
+      let url;
+
+      if (applicationFilterState) {
+        const query = queryString.stringify(applicationFilterState);
+        url = `/api/moderator/application-submission/${applicationId}/${page}/${pageSize}?${query}`
+      }
+      else {
+        url = `/api/moderator/application-submission/${applicationId}/${page}/${pageSize}`;
+      }
+
+      const { data } = await axios.get(url);
 
       runInAction(() => {
         this.pagedSubmissionApplications = data;

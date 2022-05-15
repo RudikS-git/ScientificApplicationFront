@@ -1,8 +1,8 @@
 import { Box, Divider } from '@mui/material';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
-import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { WithLoader } from '../../../HOC/WithLoader';
 import { useFetch } from '../../../hooks/useFetch';
 import { useModal } from '../../../hooks/useModal';
@@ -10,6 +10,8 @@ import { useAdminStores, useLKStores, useModeratorStores } from '../../../store/
 import { Button } from '../../../UI/Button/Button';
 import { Mark } from '../../../UI/Mark/Mark';
 import { Table } from '../../../UI/Table/Table';
+import { ApplicationFilter } from '../../common/ApplicationFilter';
+import { ApplicationFilterOptions } from '../../common/ApplicationFilter/useApplicationFilter';
 import { ApplicationSubmissionTable } from '../../common/ApplicationSubmissionTable';
 import { BackBtn } from '../../common/BackButton';
 import { PageHeader } from '../../common/PageHeader';
@@ -17,13 +19,16 @@ import { ToolBar } from '../../common/ToolBar';
 import { ApplicationSubmissionState, ApplicationSubmissionStateEnum, ApplicationSubmissionType } from '../../Types/ApplicationSubmission';
 import { SetApplicationSubmissionModal } from '../SetApplicationSubmissionModal';
 import classes from './ApplicationSubmissions.module.scss';
+import queryString from 'query-string';
 
 export const ApplicationSubmissions = observer(() => {
 
   const { id } = useParams();
-  const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications }, applicationSubmissionStore } = useModeratorStores();
+  const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications, getApplicationStates, applicationStates }, applicationSubmissionStore } = useModeratorStores();
   const { name } = applicationSubmissionStore?.application || {};
   const navigate = useNavigate();
+  const location = useLocation();
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
 
   const submitHandler = ({ data, error, validateErrors }: any) => {
     if (!error) {
@@ -39,13 +44,30 @@ export const ApplicationSubmissions = observer(() => {
     applicationSubmissionStore.application = data;
   }
 
-  const _getApplicationSubmissions = async () => {
-    const { data } = await startFetch(() => getApplicationSubmissions(Number(id)));
+  const _getApplicationSubmissions = async (filterOptions: Partial<ApplicationFilterOptions> | undefined = undefined) => {
+    if (filterOptions) {
+      const { data } = await startFetch(() => getApplicationSubmissions(Number(id), 1, 15, filterOptions));
+    }
+    else {
+      const { data } = await startFetch(() => getApplicationSubmissions(Number(id)));
+    }
   }
 
   useEffect(() => {
     _getApplicationById();
-    _getApplicationSubmissions();
+
+    if (!location.search) {
+      _getApplicationSubmissions();
+    }
+    else {
+      const query = queryString.parse(location.search);
+      _getApplicationSubmissions(query);
+    }
+
+    if (!applicationStates) {
+      getApplicationStates();
+    }
+
   }, [id])
 
   return (
@@ -56,11 +78,18 @@ export const ApplicationSubmissions = observer(() => {
         <ToolBar>
           <Button
             variant="outlined"
+            onClick={() => setFilterOpen(!filterOpen)}
           >
             Фильтрация
           </Button>
         </ToolBar>
         <Divider />
+
+        <ApplicationFilter
+          collapseIn={filterOpen}
+          setCollapseIn={setFilterOpen}
+          applicationStates={applicationStates || [] as ApplicationSubmissionState[]}
+        />
 
         <ApplicationSubmissionTable
           pagedApplicationSubmissions={pagedSubmissionApplications}
@@ -75,3 +104,7 @@ export const ApplicationSubmissions = observer(() => {
     </WithLoader>
   )
 })
+function getApplicationSubmissions(arg0: number): import("axios").AxiosPromise<any> | Promise<any> {
+  throw new Error('Function not implemented.');
+}
+

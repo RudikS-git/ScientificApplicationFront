@@ -29,11 +29,17 @@
 }
 
 .button-box {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: .5em;
+    gap: 16px;
 
-    & button {
-        width: 50%;
+    & > * {
+        width: 100%;
+    }
+
+    & > * {
+        width: 100%;
     }
 }

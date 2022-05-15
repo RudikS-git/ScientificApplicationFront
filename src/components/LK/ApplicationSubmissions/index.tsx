@@ -2,7 +2,7 @@ import { Box, Divider } from '@mui/material';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { WithLoader } from '../../../HOC/WithLoader';
 import { useFetch } from '../../../hooks/useFetch';
 import { useModal } from '../../../hooks/useModal';
@@ -19,14 +19,17 @@ import { useApplicationSubmission } from './useApplicationSubmission';
 import AddIcon from '@mui/icons-material/Add';
 import { PageHeader } from '../../common/PageHeader';
 import { ApplicationFilter } from '../../common/ApplicationFilter';
+import { ApplicationFilterOptions } from '../../common/ApplicationFilter/useApplicationFilter';
+import queryString from 'query-string';
 
 export const ApplicationSubmissions = observer(() => {
 
   const { id } = useParams();
-  const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications }, applicationSubmissionStore } = useLKStores();
+  const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications, getApplicationStates, applicationStates }, applicationSubmissionStore } = useLKStores();
   const { name } = applicationSubmissionStore?.application || {};
   const { isOpen, open, close } = useModal();
   const navigate = useNavigate();
+  const location = useLocation();
   const [filterOpen, setFilterOpen] = useState(false);
 
   const submitHandler = ({ data, error, validateErrors }: any) => {
@@ -44,8 +47,13 @@ export const ApplicationSubmissions = observer(() => {
     applicationSubmissionStore.application = data;
   }
 
-  const _getApplicationSubmissions = async () => {
-    const { data } = await startFetch(() => getApplicationSubmissions(Number(id)));
+  const _getApplicationSubmissions = async (filterOptions: Partial<ApplicationFilterOptions> | undefined = undefined) => {
+    if (filterOptions) {
+      const { data } = await startFetch(() => getApplicationSubmissions(Number(id), 1, 15, filterOptions));
+    }
+    else {
+      const { data } = await startFetch(() => getApplicationSubmissions(Number(id)));
+    }
   }
 
   const _deleteApplicationSubmission = async (id: number) => {
@@ -58,7 +66,19 @@ export const ApplicationSubmissions = observer(() => {
 
   useEffect(() => {
     _getApplicationById();
-    _getApplicationSubmissions();
+
+    if (!location.search) {
+      _getApplicationSubmissions();
+    }
+    else {
+      const query = queryString.parse(location.search);
+      _getApplicationSubmissions(query);
+    }
+
+    if (!applicationStates) {
+      getApplicationStates();
+    }
+
   }, [id])
 
   return (
@@ -86,10 +106,11 @@ export const ApplicationSubmissions = observer(() => {
         </Box>
 
         <Divider />
-
-        {
-          filterOpen && <ApplicationFilter />
-        }
+        <ApplicationFilter
+          collapseIn={filterOpen}
+          setCollapseIn={setFilterOpen}
+          applicationStates={applicationStates || [] as ApplicationSubmissionState[]}
+        />
 
         <ApplicationSubmissionTable
           pagedApplicationSubmissions={pagedSubmissionApplications}
