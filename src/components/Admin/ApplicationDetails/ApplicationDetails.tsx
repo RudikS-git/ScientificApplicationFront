@@ -24,7 +24,7 @@ import { observer } from 'mobx-react';
 import { PageHeader } from '../../common/PageHeader';
 import { ToolBar } from '../../common/ToolBar';
 
-export const ApplicationDetails = observer(() => {
+export const ApplicationDetails = observer(function ApplicationDetails() {
 
   const { id } = useParams();
   const { commonDictionary: { fieldTypes, getFieldTypes } } = useRootStore()

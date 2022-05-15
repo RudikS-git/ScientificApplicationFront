@@ -27,15 +27,19 @@ export const ApplicationGroup = (props: ApplicationGroup) => {
         inputFields?.map(it => {
 
           let value;
+          let error;
           let index: number;
           if (it.inputFieldId) {
             index = getIndexInputSubmission(it.inputFieldId);
 
             if (index != -1) {
               value = inputSubmissions[index]?.value
-            }
-            else {
-              value = undefined;
+
+              if (formik.errors?.inputSubmissions) {
+                const element = formik.errors.inputSubmissions[index];
+
+                error = (typeof element != 'string' && element?.value) || element
+              }
             }
           }
 
@@ -46,6 +50,7 @@ export const ApplicationGroup = (props: ApplicationGroup) => {
               value={value}
               onChange={(value) => index != -1 && formik.setFieldValue(`inputSubmissions[${index}].value`, value)}
               disabled={isReady}
+              error={error?.toString()}
             />
           )
         })

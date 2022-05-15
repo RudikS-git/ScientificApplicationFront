@@ -14,12 +14,13 @@ interface InputFieldProps {
   variantInput: VariantInputTypes, //Omit<VariantInputTypes, 'NumberFieldType'>,
   value: number | string | E164Number | undefined,
   onChange(value: number | string | E164Number | undefined): void,
-  disabled?: boolean
+  disabled?: boolean,
+  error?: string
 }
 
-export const InputField = (props: InputFieldProps) => {
+const _InputField = (props: InputFieldProps) => {
 
-  const { variantInput, value, onChange, disabled } = props;
+  const { variantInput, value, onChange, disabled, error } = props;
 
   const renderByInputType = (inputUnderTypeId: number) => {
     switch (inputUnderTypeId) {
@@ -30,6 +31,7 @@ export const InputField = (props: InputFieldProps) => {
             value={value || ''}
             onChange={(e) => onChange(e.target.value)}
             disabled={disabled}
+            error={error}
           />
         )
 
@@ -41,7 +43,7 @@ export const InputField = (props: InputFieldProps) => {
             mask='__.__.____'
             value={value as string}
             onChange={(date) => onChange(date || '')}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => <TextField {...params} error={error} />}
             disabled={disabled}
           />
 
@@ -59,6 +61,7 @@ export const InputField = (props: InputFieldProps) => {
             }}
             onChange={(e) => onChange(e.target.value)}
             disabled={disabled}
+            error={error}
           />
         )
 
@@ -73,6 +76,7 @@ export const InputField = (props: InputFieldProps) => {
             onChange={(number) => onChange(number)}
             value={value as E164Number}
             inputComponent={TextField}
+            error={error}
           />
         )
     }
@@ -85,3 +89,7 @@ export const InputField = (props: InputFieldProps) => {
     </div>
   )
 }
+
+const InputField = React.memo(_InputField);
+
+export { InputField }

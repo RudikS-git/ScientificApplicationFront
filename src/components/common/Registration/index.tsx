@@ -23,9 +23,10 @@ export const Registration = () => {
   const validationSchema = yup.object().shape({
     email: yup.string().email("Некорректный E-mail").required("E-mail обязателен"),
     password: yup.string().required("Пароль обязателен"),
-    confirmedPassword: yup.string().required("Подтверждение пароля обязателено").test('passwordMatch', 'Пароли не совпадают', (confirmedPassword, context) => {
-      return context.parent.password === confirmedPassword;
-    }),
+    confirmedPassword: yup.string().required("Подтверждение пароля обязателено")
+      .test('passwordMatch', 'Пароли не совпадают', (confirmedPassword, context) => {
+        return context.parent.password === confirmedPassword;
+      }),
     firstName: yup.string().required("Имя обязательно"),
     lastName: yup.string().required("Фамилия обязательна"),
     patronymic: yup.string(),

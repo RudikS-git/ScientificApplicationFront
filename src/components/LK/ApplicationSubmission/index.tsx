@@ -95,8 +95,8 @@ export const ApplicationSubmission = observer(() => {
               <Button
                 variant="outlined"
                 color="primary"
-                disabled={isLoading}
-                onClick={formik.submitForm}
+                disabled={isLoading || !formik.isValid}
+                onClick={() => formik.submitForm()}
               >
                 Сохранить
               </Button>
