@@ -126,21 +126,20 @@ export const useApplicationSubmission = () => {
                     return schema.nullable()
                   }
                 })
-              // .when("maxDateTime", (value, schema) => {
-              //   if (input.maxDateTime) {
-              //     console.log(input.maxDateTime)
-              //     return schema.max(input.maxDateTime, "Дата вышла за пределы доступного диапазона")
-              //   }
+                .when("maxDateTime", (value, schema) => {
+                  if (input.maxDateTime) {
+                    return schema.max(input.maxDateTime, "Дата вышла за пределы доступного диапазона")
+                  }
 
-              //   return schema
-              // })
-              // .when("minDateTime", (value, schema) => {
-              //   if (input.minDateTime) {
-              //     return schema.min(input.minDateTime, "Дата вышла за пределы доступного диапазона")
-              //   }
+                  return schema
+                })
+                .when("minDateTime", (value, schema) => {
+                  if (input.minDateTime) {
+                    return schema.min(input.minDateTime, "Дата вышла за пределы доступного диапазона")
+                  }
 
-              //   return schema
-              // })
+                  return schema
+                })
             })
             break;
         }
@@ -156,17 +155,15 @@ export const useApplicationSubmission = () => {
       })
     })
 
+    formik.setFieldValue('inputSubmissions', currentInputSubmissions);
+
     if (schema.length > 0) {
       setValidationSchema(yup.object().shape({
         inputSubmissions: yup.tuple(schema)
       }));
     }
 
-    formik.setFieldValue('inputSubmissions', currentInputSubmissions);
-
   }, [applicationGroups, inputSubmissions])
-
-  console.log(formik);
 
   return {
     formik,

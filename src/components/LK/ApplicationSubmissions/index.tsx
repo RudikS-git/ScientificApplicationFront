@@ -22,7 +22,7 @@ import { ApplicationFilter } from '../../common/ApplicationFilter';
 import { ApplicationFilterOptions } from '../../common/ApplicationFilter/useApplicationFilter';
 import queryString from 'query-string';
 
-export const ApplicationSubmissions = observer(() => {
+const _ApplicationSubmissions = () => {
 
   const { id } = useParams();
   const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications, getApplicationStates, applicationStates }, applicationSubmissionStore } = useLKStores();
@@ -132,4 +132,7 @@ export const ApplicationSubmissions = observer(() => {
       </div>
     </WithLoader>
   )
-})
+}
+
+const ApplicationSubmissions = observer(_ApplicationSubmissions);
+export { ApplicationSubmissions }

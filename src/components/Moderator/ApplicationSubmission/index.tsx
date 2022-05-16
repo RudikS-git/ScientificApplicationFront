@@ -23,7 +23,7 @@ import { SetApplicationSubmissionModal } from '../SetApplicationSubmissionModal'
 import { useModal } from '../../../hooks/useModal';
 import { ToolBar } from '../../common/ToolBar';
 
-export const ApplicationSubmission = observer(() => {
+const _ApplicationSubmission = () => {
 
   const navigate = useNavigate();
   const { startFetch, isLoading } = useFetch({ withToast: false });
@@ -91,4 +91,7 @@ export const ApplicationSubmission = observer(() => {
       />
     </WithLoader>
   )
-})
+}
+
+const ApplicationSubmission = observer(_ApplicationSubmission);
+export { ApplicationSubmission }

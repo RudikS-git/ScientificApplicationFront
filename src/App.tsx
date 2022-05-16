@@ -20,7 +20,7 @@ import './dayjs.config.ts'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-const App: FC = observer(() => {
+const App: FC = () => {
 
     const { authStore: { getUserInfo, typeAuth, makeUnAuthState } } = useRootStore();
 
@@ -79,11 +79,10 @@ const App: FC = observer(() => {
                         draggable
                         pauseOnHover
                     />
-                    <ToastContainer />
                 </LocalizationProvider>
             </ThemeProvider>
         </StyledEngineProvider>
     );
-});
+};
 
-export default App;
+export default observer(App);

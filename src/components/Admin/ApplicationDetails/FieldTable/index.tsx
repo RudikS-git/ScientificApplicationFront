@@ -15,7 +15,7 @@ interface FieldTableProps {
   fields?: VariantInputTypes[]
 }
 
-export const FieldTable = observer(({ groupName, groupId, fields }: FieldTableProps) => {
+const _FieldTable = ({ groupName, groupId, fields }: FieldTableProps) => {
 
   const { applicationStore: { createInput, updateInput, deleteInput }, applicationDetails } = useAdminStores();
   const { open } = applicationDetails?.inputToolModal || {};
@@ -86,4 +86,7 @@ export const FieldTable = observer(({ groupName, groupId, fields }: FieldTablePr
     </div>
 
   )
-})
+}
+
+const FieldTable = observer(_FieldTable);
+export { FieldTable }

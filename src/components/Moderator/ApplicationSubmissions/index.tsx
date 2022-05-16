@@ -21,7 +21,7 @@ import { SetApplicationSubmissionModal } from '../SetApplicationSubmissionModal'
 import classes from './ApplicationSubmissions.module.scss';
 import queryString from 'query-string';
 
-export const ApplicationSubmissions = observer(() => {
+const _ApplicationSubmissions = () => {
 
   const { id } = useParams();
   const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications, getApplicationStates, applicationStates }, applicationSubmissionStore } = useModeratorStores();
@@ -103,8 +103,7 @@ export const ApplicationSubmissions = observer(() => {
       </div>
     </WithLoader>
   )
-})
-function getApplicationSubmissions(arg0: number): import("axios").AxiosPromise<any> | Promise<any> {
-  throw new Error('Function not implemented.');
 }
 
+const ApplicationSubmissions = observer(_ApplicationSubmissions);
+export { ApplicationSubmissions }

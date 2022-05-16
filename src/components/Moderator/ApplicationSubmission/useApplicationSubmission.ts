@@ -18,7 +18,7 @@ export const useApplicationSubmission = () => {
       name: name || '',
       inputSubmissions: []
     },
-    onSubmit: () => console.log(),
+    onSubmit: () => { /* do nothing */ },
     enableReinitialize: true
   });
 

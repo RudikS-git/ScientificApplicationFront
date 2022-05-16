@@ -26,7 +26,6 @@ export const ApplicationSubmissionTable = (props: ApplicationSubmissionTableProp
           "ID",
           "Дата",
           "Наименованиие",
-          "Рег.номер",
           "Статус",
           "",
         ],
@@ -39,7 +38,6 @@ export const ApplicationSubmissionTable = (props: ApplicationSubmissionTableProp
               it.id?.toString(),
               dayjs(it.created).format('DD.MM.YYYY'),
               it.name,
-              `RN-${it.id}`,
               (<ApplicationStateMark state={it.applicationState} />),
 
               <div className={classes.manageBlock}>

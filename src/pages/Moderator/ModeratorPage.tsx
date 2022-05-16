@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import ManageApplications from '../../components/Admin/ManageApplications/ManageApplications'
 import { ApplicationDetails } from '../../components/Admin/ApplicationDetails/ApplicationDetails'
 import CommonContainer from '../../components/common/CommonContainer/CommonContainer'
@@ -8,8 +8,20 @@ import { ApplicationSubmissions } from '../../components/Moderator/ApplicationSu
 import { Applications } from '../../components/Moderator/Applications'
 import { HistorySubmissions } from '../../components/Moderator/HistorySubmissions'
 import { authPageHof } from '../Auth/authPageHof'
+import { useRootStore } from '../../store/RootStore'
+import { ROLES } from '../../constants/roles'
+import { observer } from 'mobx-react'
 
 const ModeratorPage = () => {
+
+  const navigate = useNavigate();
+  const { authStore: { roles, hasRole } } = useRootStore();
+
+  useEffect(() => {
+    if (!hasRole(ROLES.Moderator)) {
+      return navigate('/');
+    }
+  }, [roles])
 
   return (
     <CommonContainer>
@@ -32,4 +44,4 @@ const ModeratorPage = () => {
   )
 }
 
-export default authPageHof(ModeratorPage)
+export default authPageHof(observer(ModeratorPage))

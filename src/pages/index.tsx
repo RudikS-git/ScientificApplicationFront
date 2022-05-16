@@ -30,13 +30,15 @@ const Pages: FC = () => {
                     classNames="fade"
                     timeout={400}
                 >
-                    <Routes location={location}>
-                        <Route path="/auth/*" element={<AuthPage />} />
-                        <Route path="/admin/*" element={<AdminPage />} />
-                        <Route path="/moderator/*" element={<ModeratorPage />} />
-                        <Route path="/*" element={<LkPage />} />
-                        <Route path="*" element={<UnknownPage />} />
-                    </Routes>
+                    <div>
+                        <Routes location={location}>
+                            <Route path="/auth/*" element={<AuthPage />} />
+                            <Route path="/admin/*" element={<AdminPage />} />
+                            <Route path="/moderator/*" element={<ModeratorPage />} />
+                            <Route path="/*" element={<LkPage />} />
+                            <Route path="*" element={<UnknownPage />} />
+                        </Routes>
+                    </div>
                 </CSSTransition>
             </TransitionGroup>
         </Suspense>

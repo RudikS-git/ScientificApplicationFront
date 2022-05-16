@@ -6,7 +6,7 @@ import { HistorySubmissionsTable } from '../../common/HistorySubmissionsTable';
 import { PageHeader } from '../../common/PageHeader';
 import { ToolBar } from '../../common/ToolBar';
 
-export const HistorySubmissions = observer(() => {
+const _HistorySubmissions = () => {
 
   const { applicationStore: { pagedSubmissionApplications, historySubmissions, gitHistorySubmissions } } = useLKStores();
   const perPages = [10, 15, 20, 25]
@@ -55,4 +55,7 @@ export const HistorySubmissions = observer(() => {
 
     </div>
   )
-})
+}
+
+const HistorySubmissions = observer(_HistorySubmissions);
+export { HistorySubmissions }

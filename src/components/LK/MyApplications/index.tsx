@@ -13,7 +13,7 @@ import { ApplicationCards } from "../../common/ApplicationCards";
 import { PageHeader } from "../../common/PageHeader";
 import classes from './MyApplications.module.scss';
 
-export const MyApplications: FC = observer(() => {
+const _MyApplications: FC = () => {
 
     const { applicationStore: { getApplications, pagedApplications } } = useLKStores();
     const { startFetch, isLoading } = useFetch();
@@ -40,4 +40,7 @@ export const MyApplications: FC = observer(() => {
             </div>
         </WithLoader>
     );
-});
+};
+
+const MyApplications = observer(_MyApplications);
+export { MyApplications }

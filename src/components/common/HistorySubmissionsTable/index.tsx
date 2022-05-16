@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { observer } from 'mobx-react'
 import React from 'react'
 import { PagedItems } from '../../../Models/PagedItems'
 import { HistorySubmission } from '../../../store/_types/HistorySubmission'
@@ -41,7 +40,7 @@ export const HistorySubmissionsTable = (props: HistorySubmissionsProps) => {
               dayjs(it.created).format('DD.MM.YYYY hh:mm'),
               (<ApplicationStateMark state={it.lastApplicationState} />),
               (<ApplicationStateMark state={it.newApplicationState} />),
-              it.comment
+              it.comment || 'Комментарий отсутствует'
             ],
           }
         })

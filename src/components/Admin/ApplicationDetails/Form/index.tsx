@@ -8,7 +8,7 @@ import classes from './Form.module.scss';
 import { useAdminStores } from '../../../../store/RootStore';
 import { observer } from 'mobx-react';
 
-export const Form = observer(() => {
+const _Form = () => {
 
   const { applicationStore: { createInput, updateInput }, applicationDetails } = useAdminStores();
 
@@ -30,4 +30,7 @@ export const Form = observer(() => {
 
     </div>
   )
-})
+}
+
+const Form = observer(_Form);
+export { Form }

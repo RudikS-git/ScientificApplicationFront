@@ -3,20 +3,17 @@ import React, { FC, ReactElement, ReactNode, useContext, useEffect } from 'react
 import { rootStore, StoresContext, useRootStore } from './RootStore';
 import { TypeAuth } from './_types/TypeAuth';
 
-export const MainStoreHOC : FC = observer(({ children }) => {
+const _MainStoreHOC: FC = ({ children }) => {
 
     const { authStore: { typeAuth }, lkStore } = useRootStore();
-    
-    if(typeAuth == TypeAuth.Auth) { // lk
-
-    }
-    // else {
-    //     context = createLkContext();
-    // }
 
     return (
         <StoresContext.Provider value={rootStore}>
-            { children }
+            {children}
         </StoresContext.Provider>
     )
-})
+}
+
+const MainStoreHOC = observer(_MainStoreHOC);
+
+export { MainStoreHOC }

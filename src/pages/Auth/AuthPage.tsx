@@ -7,7 +7,7 @@ import { useRootStore } from "../../store/RootStore";
 import { TypeAuth } from "../../store/_types/TypeAuth";
 import { Token } from "../../Token";
 
-const AuthPage: FC = observer(() => {
+const _AuthPage: FC = () => {
 
     const navigate = useNavigate();
 
@@ -25,6 +25,6 @@ const AuthPage: FC = observer(() => {
             <Route path="/registration" element={<Registration />} />
         </Routes>
     );
-});
+};
 
-export default AuthPage;
+export default observer(_AuthPage);

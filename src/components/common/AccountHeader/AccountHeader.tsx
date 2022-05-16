@@ -7,9 +7,9 @@ import { useRootStore } from '../../../store/RootStore';
 import classes from './AccountHeader.module.scss';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-export const AccountHeader = observer(() => {
+const _AccountHeader = () => {
 
-	const { authStore: { id, email, logout } } = useRootStore();
+	const { authStore: { id, email, logout, fullName, rolesAsString } } = useRootStore();
 	const navigator = useNavigate();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -52,10 +52,19 @@ export const AccountHeader = observer(() => {
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
+				<MenuItem disabled>
+					{fullName}
+				</MenuItem>
+				<MenuItem disabled>
+					{rolesAsString}
+				</MenuItem>
 				<MenuItem className={classes.btn} onClick={logoutHandler} disableRipple>
 					Выйти
 				</MenuItem>
 			</Menu>
 		</div>
 	)
-})
+}
+
+const AccountHeader = observer(_AccountHeader);
+export { AccountHeader }

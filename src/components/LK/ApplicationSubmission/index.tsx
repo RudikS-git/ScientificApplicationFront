@@ -19,10 +19,12 @@ import { PageHeader } from '../../common/PageHeader';
 import { ApplicationSubmissionForm } from '../../common/ApplicationSubmissionForm/ApplicationSubmissionForm';
 import { ApplicationSubmissionPageHeader } from '../../common/ApplicationSubmissionPageHeader';
 
-export const ApplicationSubmission = observer(() => {
+const _ApplicationSubmission = () => {
 
   const navigate = useNavigate();
-  const { startFetch, isLoading } = useFetch({ withToast: false });
+  const { startFetch: startFetchApplication, isLoading: isApplicationLoading } = useFetch({ withToast: false });
+  const { startFetch: startFetchSubmission, isLoading: isSubmissionLoading } = useFetch({ withToast: false });
+  const { startFetch: startFetchVerification, isLoading: isVerificationLoading } = useFetch({ withToast: false });
   const { id, applicationSubmissionId } = useParams();
   const { applicationStore: { getApplicationById, getApplicationSubmissions, pagedSubmissionApplications, getApplicationSubmissionById, sendApplicationForVerification }, applicationSubmissionStore } = useLKStores();
   const { name, applicationGroups } = applicationSubmissionStore?.application || {};
@@ -32,7 +34,7 @@ export const ApplicationSubmission = observer(() => {
   const isReady = applicationState?.id !== ApplicationSubmissionStateEnum.Draft && applicationState?.id !== ApplicationSubmissionStateEnum.Modification;
 
   const _getApplicationById = async () => {
-    const { data, error } = await startFetch(() => getApplicationById(Number(id)));
+    const { data, error } = await startFetchApplication(() => getApplicationById(Number(id)));
 
     if (error) {
       navigate('/my-applications');
@@ -43,7 +45,7 @@ export const ApplicationSubmission = observer(() => {
   }
 
   const _getApplicationSubmissionById = async () => {
-    const { data, error } = await startFetch(() => getApplicationSubmissionById(Number(applicationSubmissionId)));
+    const { data, error } = await startFetchSubmission(() => getApplicationSubmissionById(Number(applicationSubmissionId)));
 
     if (error) {
       navigate('/my-applications');
@@ -54,7 +56,7 @@ export const ApplicationSubmission = observer(() => {
   }
 
   const _sendApplicationForVerification = async () => {
-    const { data, error } = await startFetch(() => sendApplicationForVerification(Number(applicationSubmissionId)));
+    const { data, error } = await startFetchVerification(() => sendApplicationForVerification(Number(applicationSubmissionId)));
 
     if (error) {
       toast("Не удалось отправить заявку на проверку", { type: 'error' });
@@ -71,14 +73,14 @@ export const ApplicationSubmission = observer(() => {
   }, [])
 
   return (
-    <WithLoader isLoading={isLoading}>
+    <WithLoader isLoading={isApplicationLoading || isSubmissionLoading}>
       <div className={classes.root}>
         <ApplicationSubmissionPageHeader applicationState={applicationState}>
           {name}, заявка № {applicationSubmissionId}
         </ApplicationSubmissionPageHeader>
 
         <div className={classes.headerBtnGroup}>
-          <BackBtn disabled={isLoading} />
+          <BackBtn disabled={isApplicationLoading || isSubmissionLoading} />
 
           {
             !isReady &&
@@ -86,7 +88,7 @@ export const ApplicationSubmission = observer(() => {
               <Button
                 variant="contained"
                 color="primary"
-                disabled={isLoading}
+                disabled={isApplicationLoading || isSubmissionLoading}
                 onClick={_sendApplicationForVerification}
               >
                 Отправить на проверку
@@ -95,7 +97,7 @@ export const ApplicationSubmission = observer(() => {
               <Button
                 variant="outlined"
                 color="primary"
-                disabled={isLoading || !formik.isValid}
+                disabled={isApplicationLoading || isSubmissionLoading || !formik.isValid}
                 onClick={() => formik.submitForm()}
               >
                 Сохранить
@@ -113,4 +115,7 @@ export const ApplicationSubmission = observer(() => {
       </div>
     </WithLoader>
   )
-})
+}
+
+const ApplicationSubmission = observer(_ApplicationSubmission);
+export { ApplicationSubmission }

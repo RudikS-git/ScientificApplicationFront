@@ -17,7 +17,7 @@ interface CreateApplicationModal {
   error?: string,
 }
 
-export const SetApplicationSubmissionModal = observer(({ isOpen, close }: CreateApplicationModal) => {
+const _SetApplicationSubmissionModal = ({ isOpen, close }: CreateApplicationModal) => {
 
   const { formik } = useManageApplicationSubmission({ close });
   const { applicationStore: { applicationStates }, applicationSubmissionStore } = useModeratorStores();
@@ -77,4 +77,7 @@ export const SetApplicationSubmissionModal = observer(({ isOpen, close }: Create
       </div>
     </ModalWindow>
   )
-})
+}
+
+const SetApplicationSubmissionModal = observer(_SetApplicationSubmissionModal);
+export { SetApplicationSubmissionModal }

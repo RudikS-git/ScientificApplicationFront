@@ -14,6 +14,10 @@ export class AuthStore {
     id?: number;
     email?: string;
     birthDate?: Date;
+    firstName?: string;
+    lastName?: string;
+    patronymic?: string;
+    roles?: string[];
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
@@ -61,6 +65,18 @@ export class AuthStore {
         return result;
     }
 
+    hasRole = (role: string) => {
+        return this.roles?.find(it => it === role);
+    }
+
+    get fullName(): string {
+        return `${this.firstName} ${this.lastName} ` + (this.patronymic || '');
+    }
+
+    get rolesAsString(): string {
+        return this.roles?.join(', ') || '';
+    }
+
     getUserInfo = async () => {
         const { data } = await axios.get('/api/user/me');
 
@@ -69,6 +85,10 @@ export class AuthStore {
             this.id = data.id
             this.email = data.email;
             this.birthDate = data.birthDate;
+            this.firstName = data.personName.firstName;
+            this.lastName = data.personName.lastName;
+            this.patronymic = data.personName.patronymic;
+            this.roles = data.roles;
         })
     }
 }

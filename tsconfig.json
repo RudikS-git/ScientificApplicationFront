@@ -24,7 +24,6 @@
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "src/yupConfig.js",
     ],
     "exclude": [
         "node_modules"
