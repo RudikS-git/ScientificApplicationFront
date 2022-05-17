@@ -17,13 +17,19 @@ const LkPage = () => {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/my-applications">
-          <Route path="history-submission/:id/:applicationSubmissionId">
-            <Route path=":page/:perPage" element={<HistorySubmissions />} />
-            <Route path="" element={<HistorySubmissions />} />
+
+          <Route path="details/:id">
+            <Route path=":applicationSubmissionId">
+              <Route path="history-submission">
+                <Route path=":page/:perPage" element={<HistorySubmissions />} />
+                <Route path="" element={<HistorySubmissions />} />
+              </Route>
+              <Route path="" element={<ApplicationSubmission />} />
+            </Route>
+
+            <Route path="" element={<ApplicationSubmissions />} />
           </Route>
 
-          <Route path="details/:id/:applicationSubmissionId" element={<ApplicationSubmission />} />
-          <Route path="details/:id" element={<ApplicationSubmissions />} />
           <Route path=":page/:perPage" element={<MyApplications />} />
           <Route path="" element={<MyApplications />} />
         </Route>

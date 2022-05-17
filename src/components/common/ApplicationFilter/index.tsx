@@ -32,9 +32,8 @@ export const ApplicationFilter = ({ applicationStates, collapseIn, setCollapseIn
           label="Дата начала"
           inputFormat="DD.MM.YYYY"
           mask='__.__.____'
-          value={filterState.startDate || ''}
-          onChange={(date) => setFilterState({ startDate: date || undefined })}
-          // maxDate={filterState.endDate || new Date().toDateString()}
+          value={filterState.startDate}
+          onChange={(date) => setFilterState({ startDate: date })}
           renderInput={(params) => (
             <TextField
               size="small"
@@ -47,8 +46,8 @@ export const ApplicationFilter = ({ applicationStates, collapseIn, setCollapseIn
           label="Дата конца"
           inputFormat="DD.MM.YYYY"
           mask='__.__.____'
-          value={filterState.endDate || ''}
-          onChange={(date) => setFilterState({ endDate: date || undefined })}
+          value={filterState.endDate}
+          onChange={(date) => setFilterState({ endDate: date })}
           renderInput={(params) => (
             <TextField
               size="small"

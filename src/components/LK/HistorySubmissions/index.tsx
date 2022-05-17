@@ -41,11 +41,11 @@ const _HistorySubmissions = () => {
         pagedHistorySubmissions={historySubmissions}
 
         changePageHandler={function (newPage: number, perPage: number): void {
-          navigate(`/my-applications/history-submission/${id}/${applicationSubmissionId}/${newPage}/${perPage}`)
+          navigate(`/my-applications/details/${id}/${applicationSubmissionId}/history-submission/${newPage}/${perPage}`)
         }}
 
         changeRowsPerPageHandler={function (perPage: number): void {
-          navigate(`/my-applications/history-submission/${id}/${applicationSubmissionId}/1/${perPage}`)
+          navigate(`/my-applications/details/${id}/${applicationSubmissionId}/history-submission/1/${perPage}`)
         }}
 
         page={Number(page)}

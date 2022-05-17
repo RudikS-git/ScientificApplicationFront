@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router';
 export interface ApplicationFilterOptions {
   id: number,
   name: string,
-  startDate: string,
-  endDate: string,
+  startDate?: string | null,
+  endDate?: string | null,
   applicationState: ApplicationSubmissionStateEnum
 }
 
@@ -30,7 +30,7 @@ export const useApplicationFilter = ({ setCollapseIn }: UseApplicationFilterProp
     })
   }
 
-  const [filterState, setFilterState] = useReducer(filterDispatcher, {} as ApplicationFilterOptions);
+  const [filterState, setFilterState] = useReducer(filterDispatcher, { startDate: undefined, endDate: undefined } as ApplicationFilterOptions);
 
   useEffect(() => {
     const obj = queryString.parse(location.search);

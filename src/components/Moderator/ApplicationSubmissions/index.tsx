@@ -96,7 +96,7 @@ const _ApplicationSubmissions = () => {
           renderActionNode={(it) =>
             <>
               <Button onClick={() => navigate(`/moderator/applications/details/${id}/${it.id}`)}>Подробнее</Button>
-              <Button onClick={() => navigate(`/moderator/applications/history-submission/${id}/${it.id}`)}>История</Button>
+              <Button onClick={() => navigate(`/moderator/applications/details/${id}/${it.id}/history-submission`)}>История</Button>
             </>
           }
         />
